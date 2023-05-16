@@ -1,0 +1,156 @@
+{% include 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Employee Registration Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+      .button{
+        display:flex;
+        justify-content:center;
+        gap:30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title"> <h1></h1> </div>
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <h3> <div class="card-header">Employee Registration</div> </h3>
+          <div class="card-body">
+            <form method="POST" action="{% url 'employeeRegistration' %}">
+              {% csrf_token %}
+              <div class="form-group row">
+                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                <div class="col-md-6">
+                  <input id="name" type="text" class="form-control" name="name" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
+                <div class="col-md-6">
+                  <input id="username" type="text" class="form-control" name="username" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="designation" class="col-md-4 col-form-label text-md-right">Designation</label>
+                <div class="col-md-6">
+                  <select id="designation" class="form-control" name="designation" required>
+                    <option value="" disabled selected>Choose Designation</option>
+                    <option value="new_joiny">New Joiny</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="contact" class="col-md-4 col-form-label text-md-right">Contact</label>
+                <div class="col-md-6">
+                  <input id="contact" type="text" class="form-control" name="contact" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="alternative_contact" class="col-md-4 col-form-label text-md-right">Alternative Contact</label>
+                <div class="col-md-6">
+                  <input id="alternative_contact" type="text" class="form-control" name="alternative_contact">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="blood_group" class="col-md-4 col-form-label text-md-right">Blood Group</label>
+                <div class="col-md-6">
+                  <select id="blood_group" class="form-control" name="blood_group" required>
+                    <option value="" disabled selected>Choose Blood Group</option>
+                    <option value="A+">A+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="personal_email" class="col-md-4 col-form-label text-md-right">Personal Email</label>
+                <div class="col-md-6">
+                  <input id="personal_email" type="email" class="form-control" name="personal_email" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="company_email" class="col-md-4 col-form-label text-md-right">Company Email</label>
+                <div class="col-md-6">
+                  <input id="company_email" type="email" class="form-control" name="company_email" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="role" class="col-md-4 col-form-label text-md-right">Job Role </label>
+                <div class="col-md-6">
+                  <select id="role" class="form-control" name="role" required>
+                    <option value="" disabled selected>Choose Blood Group</option>
+                    <option value="A+">A+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="aadhaar" class="col-md-4 col-form-label text-md-right">Aadhaar</label>
+                <div class="col-md-6">
+                  <input id="aadhaar" type="text" class="form-control" name="aadhaar" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="pan" class="col-md-4 col-form-label text-md-right">Pan</label>
+                <div class="col-md-6">
+                  <input id="pan" type="text" class="form-control" name="pan" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="personal_email" class="col-md-4 col-form-label text-md-right">Date of Birth</label>
+                <div class="col-md-6">
+                  <input id="persodate_of_birthnal_email" type="date" class="form-control" name="date_of_birth" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="current_address" class="col-md-4 col-form-label text-md-right">Current Address</label>
+                <div class="col-md-6">
+                  <input id="current_address" type="text" class="form-control" name="current_address" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="permanent_address" class="col-md-4 col-form-label text-md-right">Permanent Address</label>
+                <div class="col-md-6">
+                  <input id="permanent_address" type="text" class="form-control" name="permanent_address" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                <div class="col-md-6">
+                  <input id="password" type="password" class="form-control" name="password" required>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="confirm_username" class="col-md-4 col-form-label text-md-right">Confirm Username</label>
+                <div class="col-md-6">
+                  <input id="confirm_username" type="password" class="form-control" name="confirm_username" required>
+                </div>
+              </div>
+
+              <div class="form-group button">
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+              
+{% endblock %}
+    </form>
+  </body>
+</html>

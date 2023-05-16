@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+        </title>
+        <link rel="stylesheet" href="../static/css/header.css">
+    </head>
+    <body>
+        <header>
+            <div class="company-icon">
+              <a href="{% url 'base' %}"><img src="{% static 'icons/company-icon.png' %}" alt="Company Logo"></a>
+              
+            </div>
+            <div class="demo-buttons">
+                <div class="dropdown">
+                    <button class="dropbtn">Login</button>
+                    <div class="dropdown-content">
+                      <a href="{% url 'superAdminLogin' %}">Super Admin</a> 
+                      <a href="{% url 'adminLogin' %}">Admin</a>                     
+                      <a href="{% url 'employeeLogin' %}">Employee </a>
+                    </div>
+                  </div>
+              <button>Services</button>
+              <button>Technologies</button>
+              <button>Blogs</button>
+              <button>Carrers</button>
+              
+            </div>
+          </header>
+    </body>
+</html>
+
+
+
+  

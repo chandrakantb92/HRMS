@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Super Admin Login </title>
+        <link rel="stylesheet" href="{% static 'css/admin_login.css' %}">
+
+    </head>
+    <body>
+        {% include 'base.html' %}
+        {% block content %}
+        <div class="title">
+            <h1>Super Admin Login</h1>
+        </div>
+  <form method="post" action="#">
+    {% comment %} {% url 'superAdminLogin' %} {% endcomment %}
+    {% csrf_token %}
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+      <button type="submit">Login</button>
+    </div>
+</form>
+{% endblock %}
+    </body>
+</html>

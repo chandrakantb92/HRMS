@@ -1,0 +1,73 @@
+/* Style for the body element */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Style for the form element */
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Style for the form input elements */
+  form div {
+    margin-bottom: 10px;
+  }
+  
+  form label {
+    display: inline-block;
+    width: 150px;
+    font-weight: bold;
+  }
+  
+  form input[type="text"],
+  form input[type="tel"],
+  form input[type="email"],
+  form select,
+  form textarea,
+  form input[type="date"],
+  form input[type="password"] {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Style for the form button */
+  form button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Media query for smaller screens */
+  @media only screen and (max-width: 600px) {
+    /* Style for the form element */
+    form {
+      padding: 10px;
+    }
+  
+    form label {
+      width: 100%;
+      display: block;
+    }
+  
+    form input[type="text"],
+    form input[type="tel"],
+    form input[type="email"],
+    form select,
+    form textarea,
+    form input[type="date"],
+    form input[type="password"] {
+      width: 100%;
+    }
+  }
+  

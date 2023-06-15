@@ -1,10 +1,9 @@
-{% include 'base.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>Employee Registration Form</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <style>
       .button{
         display:flex;
@@ -15,26 +14,26 @@
   </head>
   <body>
     <div class="title"> <h1></h1> </div>
-{% block content %}
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
+    {% block content %}
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
           <h3> <div class="card-header">Employee Registration</div> </h3>
-          <div class="card-body">
-            <form method="POST" action="{% url 'employeeRegistration' %}">
-              {% csrf_token %}
-              <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                <div class="col-md-6">
-                  <input id="name" type="text" class="form-control" name="name" required>
+            <div class="card-body">
+              <form method="POST" action="{% url 'employeeRegistration' %}">
+                {% csrf_token %}
+                  <div class="form-group row">
+                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                  <div class="col-md-6">
+                      <input id="name" type="text" class="form-control" name="name"  autocomplete="off" required>
+                  </div>
                 </div>
-              </div>
 
               <div class="form-group row">
                 <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
                 <div class="col-md-6">
-                  <input id="username" type="text" class="form-control" name="username" required>
+                  <input id="username" type="text" class="form-control" name="username"  autocomplete="off" required>
                 </div>
               </div>
 
@@ -43,7 +42,17 @@
                 <div class="col-md-6">
                   <select id="designation" class="form-control" name="designation" required>
                     <option value="" disabled selected>Choose Designation</option>
-                    <option value="new_joiny">New Joiny</option>
+                    <option value="Analyst">Solution Analyst</option>
+                    <option value="Intern">Intern</option>
+                    <option value="Jr developer">Jr developer</option>
+                    <option value="Sr developer">Sr developer</option>
+                    <option value="Tester">Tester</option>
+                    <option value="Designer">Designer</option>
+                    <option value="Business">Business Alnalyst</option>
+                    <option value="Manager">Manager</option>
+                    <option value="HR">HR</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="CEO">CEO</option>
                   </select>
                 </div>
               </div>
@@ -51,14 +60,14 @@
               <div class="form-group row">
                 <label for="contact" class="col-md-4 col-form-label text-md-right">Contact</label>
                 <div class="col-md-6">
-                  <input id="contact" type="text" class="form-control" name="contact" required>
+                  <input id="contact" type="text" class="form-control" name="contact" required  autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="alternative_contact" class="col-md-4 col-form-label text-md-right">Alternative Contact</label>
                 <div class="col-md-6">
-                  <input id="alternative_contact" type="text" class="form-control" name="alternative_contact">
+                  <input id="alternative_contact" type="text" class="form-control" name="alternative_contact"  autocomplete="off">
                 </div>
               </div>
 
@@ -68,6 +77,13 @@
                   <select id="blood_group" class="form-control" name="blood_group" required>
                     <option value="" disabled selected>Choose Blood Group</option>
                     <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
                   </select>
                 </div>
               </div>
@@ -75,40 +91,43 @@
               <div class="form-group row">
                 <label for="personal_email" class="col-md-4 col-form-label text-md-right">Personal Email</label>
                 <div class="col-md-6">
-                  <input id="personal_email" type="email" class="form-control" name="personal_email" required>
+                  <input id="personal_email" type="email" class="form-control" name="personal_email" required  autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="company_email" class="col-md-4 col-form-label text-md-right">Company Email</label>
                 <div class="col-md-6">
-                  <input id="company_email" type="email" class="form-control" name="company_email" required>
+                  <input id="company_email" type="email" class="form-control" name="company_email" required  autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="role" class="col-md-4 col-form-label text-md-right">Job Role </label>
+                <label for="role" class="col-md-4 col-form-label text-md-right"> Role </label>
                 <div class="col-md-6">
                   <select id="role" class="form-control" name="role" required>
-                    <option value="" disabled selected>Choose Blood Group</option>
-                    <option value="A+">A+</option>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="employee">Employee</option>
+                    <option value="admin">Admin</option>
+                    <option value="superadmin">Super Admin</option>
+
                   </select>
                 </div>
               </div>
 
-              <div class="form-group row">
+              {% comment %} <div class="form-group row">
                 <label for="aadhaar" class="col-md-4 col-form-label text-md-right">Aadhaar</label>
                 <div class="col-md-6">
-                  <input id="aadhaar" type="text" class="form-control" name="aadhaar" required>
+                  <input id="aadhaar" type="text" class="form-control" name="aadhaar" required  autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="pan" class="col-md-4 col-form-label text-md-right">Pan</label>
                 <div class="col-md-6">
-                  <input id="pan" type="text" class="form-control" name="pan" required>
+                  <input id="pan" type="text" class="form-control" name="pan" required  autocomplete="off">
                 </div>
-              </div>
+              </div> {% endcomment %}
 
               <div class="form-group row">
                 <label for="personal_email" class="col-md-4 col-form-label text-md-right">Date of Birth</label>
@@ -120,14 +139,21 @@
               <div class="form-group row">
                 <label for="current_address" class="col-md-4 col-form-label text-md-right">Current Address</label>
                 <div class="col-md-6">
-                  <input id="current_address" type="text" class="form-control" name="current_address" required>
+                  <input id="current_address" type="text" class="form-control" name="current_address" required  autocomplete="off">
                 </div>
               </div>
 
               <div class="form-group row">
                 <label for="permanent_address" class="col-md-4 col-form-label text-md-right">Permanent Address</label>
                 <div class="col-md-6">
-                  <input id="permanent_address" type="text" class="form-control" name="permanent_address" required>
+                  <input id="permanent_address" type="text" class="form-control" name="permanent_address" required  autocomplete="off">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="image" class="col-md-4 col-form-label text-md-right">Upload Employee Image</label>
+                <div class="col-md-6">
+                  <input id="image" type="file" class="form-control" name="image" required  autocomplete="off">
                 </div>
               </div>
 
@@ -139,12 +165,12 @@
               </div>
 
               <div class="form-group row">
-                <label for="confirm_username" class="col-md-4 col-form-label text-md-right">Confirm Username</label>
+                <label for="confirm_username" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
                 <div class="col-md-6">
                   <input id="confirm_username" type="password" class="form-control" name="confirm_username" required>
                 </div>
               </div>
-
+              
               <div class="form-group button">
                 <button type="reset" class="btn btn-secondary">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>

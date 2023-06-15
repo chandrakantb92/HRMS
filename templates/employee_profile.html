@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee </title>
+        <link rel="stylesheet"  href="{% static 'css/employee_base.css' %}">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin:0;
+                padding-left:20%;
+                background-color:#fff;
+                width:100%;
+                height: 100%;
+              }
+              .profileheader{
+                top:70px;
+                right:0;
+                position:fixed;
+                width:80%;
+                border:0px;
+              } 
+              .content {
+                width: 70%;
+                background-color: #fff;
+                margin-top:50px;
+                padding:2rem;
+              }
+              h3{
+                background-color: rgb(153, 240, 150)
+              }
+        </style>
+        
+        
+    </head>
+    <body>
+        {% include 'employee_header.html' %}
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  />Home</a></li>
+                    <li><a href="{% url 'employeeProfile' %}"><img class="icon" src="{% static 'images/profile.png' %}" />Profile</a></li>
+                    <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
+                    <li><a href="{% url 'attendanceSection' %}"><img class="icon" src="{% static 'images/attendance.png' %}" />Attendance Section</a></li>
+                    <li><a href="{% url 'employeePaySleep' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/talentaquasition.png' %}" />Talent Aquasition</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/employeehandbook.png' %}" />Employee Handbook</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/reimbursement.png' %}" />Reimbursment</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/handbook.png' %}" />IT Support Module</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/exit.png' %}" />Exit</a></li>
+                    <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li>
+
+                </ul>
+            </div>
+            {% comment %} profile heading {% endcomment %}
+            <div class="content">
+                <div class="profileheader">
+                    <div class="title">
+                        <h2>Employee Portal</h2>
+                    </div>
+                    <div class="logo">
+                        <div >
+                            <img class="avtar" src="{{user.image.url}}"  />
+                        </div>
+                        <div class="user-1">
+                            <div class="user-name">{{user.name}}</div>
+                            <div class="user-id">{{user.id}}</div>
+                        </div>
+                    </div>
+
+                </div>
+                {% comment %} content {% endcomment %}
+
+                <div>
+                    <h2>Employee Details</h2>
+                  </div>
+                  <div class="details">
+                    <h3>Personal Information</h3>
+                    <ul>
+                      <li><strong>Employee Id :</strong>{{user.id}}</li>
+                      <li><strong>Name:</strong>{{user.name}}</li>
+                      <li><strong>Designation:</strong> {{user.designation}}</li>
+                      <li><strong>Username:</strong>{{user.username}}</li>
+                      <li><strong>Contact:</strong>{{user.contact}}</li>
+                      <li><strong>Alternative Contact:</strong>{{user.alternative_contact}}</li>
+                      <li><strong>Blood Group:</strong> {{user.blood_group}}</li>
+                      <li><strong>Personal Email:</strong> {{user.personal_email}}</li>
+                      <li><strong>Company Email:</strong> {{user.company_email}}</li>
+                      <li><strong>Role:</strong> {{user.role}}</li>
+                      <li><strong>Date Of Birth:</strong> {{user.date_of_birth}}</li>
+                      <li><strong>Permanent Address:</strong>{{user.current_address}}</li>
+                      <li><strong>Current Address:</strong>{{user.permanent_address}}</li>
+                    </ul>
+                  </div>
+                
+                  <div class="details">
+                    <h3>Education Information</h3>
+                    <ul>
+                        <li><strong><h4>SSC Details:</strong></h4></li>
+                        <li><strong>School Name :</strong>{{empedudetails.ssc_school_name}}</li>
+                        <li><strong>Pass Out Year :</strong>{{empedudetails.ssc_passout_year}}</li>
+                        <li><strong>SSC Precentage/CGPA:</strong>{{empedudetails.ssc_percentage}}</li>
+                    </ul>
+                    <ul>
+                        <li><strong><h4>HSC Details:</strong></h4></li>
+                        <li><strong>College Name :</strong>{{empedudetails.hsc_college_name}}</li>
+                        <li><strong>Pass Out Year :</strong>{{empedudetails.hsc_passout_year}}</li>
+                        <li><strong>Stream :</strong>{{empedudetails.hsc_stream}}</li>
+                        <li><strong>HSC Precentage/CGPA:</strong>{{empedudetails.hsc_percentage}}</li>
+                    </ul>
+                    <ul>
+                        <li><strong><h4>Under Graduation Details:</strong></h4></li>
+                        <li><strong>College Name :</strong>{{empedudetails.ug_college_name}}</li>
+                        <li><strong>Pass Out Year :</strong>{{empedudetails.ug_passout_year}}</li>
+                        <li><strong>Stream :</strong>{{empedudetails.ug_stream}}</li>
+                        <li><strong>Cource Name</strong>{{empedudetails.ug_specialization}}</li>
+                        <li><strong>UG Precentage/CGPA:</strong>{{empedudetails.ug_percentage}}</li>
+                    </ul>
+                    <ul>
+                        <li><strong><h4>Post Graduation Details:</strong></h4></li>
+                        <li><strong>College Name :</strong>{{empedudetails.pg_college_name}}</li>
+                        <li><strong>Pass Out Year :</strong>{{empedudetails.pg_passout_year}}</li>
+                        <li><strong>Stream :</strong>{{empedudetails.pg_stream}}</li>
+                        <li><strong>Cource Name</strong>{{empedudetails.pg_specialization}}</li>
+                        <li><strong>UG Precentage/CGPA:</strong>{{empedudetails.pg_percentage}}</li>
+                    </ul>
+                    <ul>
+                        <li><strong><h4>Education Gap</strong></h4></li>
+                        <li><strong>Gap :</strong>{{empedudetails.education_gap}} year</li>
+                        <li><strong>Reason :</strong>{{empedudetails.gap_reason}}</li>
+                    </ul>
+                  </div>
+                
+                  <div class="details">
+                    <h3>Work Experience Details</h3>
+                    <ul>
+                        <h4>Work Experience Details</h4>
+                        <li><strong>Company Name :</strong>{{empworkexpdetails.company_name}}</li>
+                        <li><strong>Designantion:</strong>{{empworkexpdetails.designation}}</li>
+                        <li><strong>Start Date :</strong>{{empworkexpdetails.start_date}}</li>
+                        <li><strong>End Date :</strong>{{empworkexpdetails.end_date}}</li>
+                        <h4>Internship Details</h4>
+                        <li><strong>Company Name :</strong>{{empworkexpdetails.internship_company}}</li>
+                        <li><strong>Start Date :</strong>{{empworkexpdetails.internship_start_date}}</li>
+                        <li><strong>End Date :</strong>{{empworkexpdetails.internship_end_date}}</li>
+                    </ul>
+                  </div>
+                
+                  <div class="details">
+                    <h3>Work  Details</h3>
+                    <ul>
+                        <h4>Internship Details</h4>
+                        <li><strong>Start Date :</strong>{{empworkdetails.internship_start_date}}</li>
+                        <li><strong>End Date :</strong>{{empworkdetails.internship_end_date}}</li>
+                        <h4>Sankey Details</h4>
+                        <li><strong> Date Of Joining :</strong>{{empworkdetails.date_of_joining}}</li>
+                        <li><strong>Date Of Leave:</strong>{{empworkdetails.date_of_leave}}</li>
+                    </ul>
+                  </div>
+                
+                  <div class="details">
+                    <h3>Official  Details</h3>
+                    <ul>
+                        <h4>Bank Details</h4>
+                        <li><strong>Official Name:</strong>{{empofficialdetail.official_name}}</li>
+                        <li><strong>Bank Name:</strong>{{empofficialdetail.bank_name}}</li>
+                        <li><strong> A/C Number:</strong>{{empofficialdetail.bank_acount_number}}</li>
+                        <li><strong>IFSC :</strong>{{empofficialdetail.bank_ifsc}}</li>
+                        <li><strong>Aadhaar Number :</strong>{{empofficialdetail.aadhaar}}</li>
+                        <li><strong>PAN Card Number :</strong>{{empofficialdetail.pan}}</li>
+                        <h4>Official Allowtment Details</h4>
+                        <li><strong> Universal Account No :</strong>{{empofficialdetail.universal_acount_number}}</li>
+                        <li><strong>ESIC no :</strong>{{empofficialdetail.esic_number}}</li>
+                    </ul>
+                  </div>
+                
+                  <div class="details">
+                    <h3>Package  Details</h3>
+                    <ul>
+                        <h4>Bank Details</h4>
+                        <li><strong>Total package as in offer letter :</strong>{{pcgdetail.package}}</li>
+                        <li><strong>Total bonus as in offer letter :</strong>{{pcgdetail.bonus}}</li>
+                        <li><strong>In Hand Salary :</strong>{{pcgdetail.in_hand_salary}}</li>
+                        <li><strong>Gross Salary :</strong>{{pcgdetail.gross_salary}}</li>
+                        <li><strong>Basic Salary :</strong>{{pcgdetail.basic_salary}}</li>
+                        <li><strong>ERF :</strong>{{pcgdetail.erf}}</li>
+                        <li><strong>HRA :</strong>{{pcgdetail.hra}}</li>
+                        <li><strong>Travell Allownce :</strong>{{pcgdetail.travell_allowance}}</li>
+                        <li><strong>Medical Allownce :</strong>{{pcgdetail.medical_allowance}}</li>
+                        <li><strong>Medical Allownce :</strong>{{pcgdetail.other_allowance}}</li>
+                        <li><strong>ESIC :</strong>{{pcgdetail.esic}}</li>
+                        <li><strong>PT:</strong>{{pcgdetail.pt}}</li>
+                        
+                    </ul>
+                  </div>
+                {% comment %} end {% endcomment %}
+
+
+        </div>         
+    </body>
+</html>

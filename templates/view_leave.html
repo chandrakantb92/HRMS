@@ -1,0 +1,39 @@
+<!-- your_app/employee_leave_list.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Leave List</title>
+    <link rel="stylesheet" href="{% static 'css/view_leave.css' %}">
+</head>
+<body>
+    <h3><a href="{% url 'aproveLeave' %}">View Pending Leave </a></h3>
+    <div class="container">
+        <h1>Employee Leave List</h1>
+        <table>
+            <tr>
+                <th>Leave Id</th>
+                <th>Employee Id</th>
+                <th>Employee Name</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Number Of Days</th>
+                <th>Reason</th>
+            </tr>
+            {% for leave in employee_leaves %}
+            <tr>
+                <td >{{ leave.leave_id }}</td>
+                <td >{{ leave.emp_id }}</td>
+                <td>{{ leave.emp_id.name }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.leave_from }}</td>
+                <td>{{ leave.leave_till }}</td>
+                <td>{{ leave.number_of_days }}</td>
+                <td>{{ leave.leave_reason }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

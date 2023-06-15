@@ -1,0 +1,59 @@
+<!-- your_app/employee_leave_list.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Leave List</title>
+    <link rel="stylesheet" href="{% static 'css/view_leave.css' %}">
+</head>
+<body>
+    <h3><a href="{% url 'viewAllLeave' %}">View All </a></h3>
+    <div class="container">
+        <h1>Employee Leave List</h1>
+        <table>
+            <tr>
+                <th></th>
+                <th>Leave Id</th>
+                <th>Employee Id</th>
+                <th>Employee Name</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Number Of Days</th>
+                <th>Reason</th>
+                <th>Approved</th>
+                <th>Action</th>
+            </tr>
+            {% for leave in employee_leaves %}
+            <form method="post" action="{% url 'aproveLeave' %}">
+                {% csrf_token %}
+            <tr>
+                <td>
+                    <input type="input" name="l_id" id="i_id" value="{{ leave.leave_id }}" style="display:none;">
+                    <input type="input" name="e_id" id="e_id" value="{{ leave.emp_id }}" style="display:none;">
+                    <input type="input" name="number_of_day" id="number_of_day" value="{{ leave.number_of_days }}" style="display:none;">
+                </td>
+                <td >{{ leave.leave_id }}</td>
+                <td >{{ leave.emp_id }}</td>
+                <td>{{ leave.emp_id.name }}</td>
+                <td>{{ leave.leave_type }}</td>
+                <td>{{ leave.leave_from }}</td>
+                <td>{{ leave.leave_till }}</td>
+                <td>{{ leave.number_of_days }}</td>
+                <td>{{ leave.leave_reason }}</td>
+                <td>
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="approve" id="approve" value="Approved">
+                        <label for="approve">Approve</label>
+                    </div>
+                </td>
+                <td>
+                    <button class="submit-button">Submit</button>
+                </td>
+            </tr>
+        </form>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

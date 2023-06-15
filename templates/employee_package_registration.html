@@ -1,0 +1,123 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee Work Experience Details</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="title"> <h1></h1> </div>
+        {% block content %}
+            <div class="container">
+                <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                         <div class="card-header"><h3>Package Details</h3></div> 
+                            <div class="card-body">
+                        <form method="POST" action="{% url 'employeePackageRegistration' %}">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id" class="col-md-4 col-form-label text-md-right"> Select Employee</label>
+                                <div class="col-md-6">
+                                    <select id="id" class="form-control" name="id" >
+                                        {% for employee in employees %}
+                                            <option value="{{ employee.id }}" class="form-control">{{ employee.id }} {{ employee.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-form-label text-md-right"><h5>Package Details</h5></div>
+                            <div class="form-group row">
+                                <label for="package" class="col-md-4 col-form-label text-md-right">   Package </label>
+                                    <div class="col-md-6">
+                                        <input id="package" type="text" class="form-control" name="package" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="bonus" class="col-md-4 col-form-label text-md-right">Bonus </label>
+                                    <div class="col-md-6">
+                                        <input id="bonus" type="text" class="form-control" name="bonus" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="in_hand_salary" class="col-md-4 col-form-label text-md-right"> In Hand Salary  </label>
+                                    <div class="col-md-6">
+                                        <input id="in_hand_salary" type="text" class="form-control" name="in_hand_salary" required>
+                                    </div>
+                                </div>
+
+                            <div class="form-group row">
+                                <label for="gross_salary" class="col-md-4 col-form-label text-md-right">Gross Salary</label>
+                                    <div class="col-md-6">
+                                        <input id="gross_salary" type="text" class="form-control" name="gross_salary" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="basic_salary" class="col-md-4 col-form-label text-md-right">Basic Salary</label>
+                                    <div class="col-md-6">
+                                        <input id="basic_salary" type="text" class="form-control" name="basic_salary" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="erf" class="col-md-4 col-form-label text-md-right">ERF  </label>
+                                    <div class="col-md-6">
+                                        <input id="erf" type="text" class="form-control" name="erf" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="hra" class="col-md-4 col-form-label text-md-right"> HRA  </label>
+                                    <div class="col-md-6">
+                                        <input id="hra" type="text" class="form-control" name="hra" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="travell_allowance" class="col-md-4 col-form-label text-md-right"> Travel Allowence </label>
+                                    <div class="col-md-6">
+                                        <input id="travell_allowance" type="text" class="form-control" name="travell_allowance" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="medical_allowance" class="col-md-4 col-form-label text-md-right"> Medical Allowence </label>
+                                    <div class="col-md-6">
+                                        <input id="medical_allowance" type="text" class="form-control" name="medical_allowance" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="other_allowance" class="col-md-4 col-form-label text-md-right"> Other Allowence </label>
+                                    <div class="col-md-6">
+                                        <input id="other_allowance" type="text" class="form-control" name="other_allowance" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="esic" class="col-md-4 col-form-label text-md-right"> ESIC  </label>
+                                    <div class="col-md-6">
+                                        <input id="esic" type="text" class="form-control" name="esic" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="pt" class="col-md-4 col-form-label text-md-right"> PT </label>
+                                    <div class="col-md-6">
+                                        <input id="pt" type="text" class="form-control" name="pt" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group button">
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+        {% endblock %}
+    </body>
+</html>

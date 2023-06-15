@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee </title>
+        <link rel="stylesheet"  href="{% static 'css/employee_base.css' %}">
+        <link rel="stylesheet"  href="{% static 'css/employee_home_data.css' %}">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin:0;
+                
+                background-color:#fff;
+                width:100%;
+                height: 100%;
+              }
+              .profileheader{
+                top:70px;
+                right:0;
+                position:fixed;
+                width:80%;
+                border:0px;
+              } 
+              .content {
+                width:80%;
+                background-color: #fff;
+              }
+              .padding{
+                top:75px;
+    
+              }
+
+              h1 {
+                text-align: center;
+              }
+              
+              .form-container {
+                max-width: 400px;
+                margin: 0 auto;
+                margin-bottom:20px;
+              }
+              
+              label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: bold;
+              }
+              
+              input[type=""] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+              }
+              
+              input[type="submit"] {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+              }
+              
+              @media screen and (max-width: 480px) {
+                .form-container {
+                  max-width: 100%;
+                  padding: 0 20px;
+                }
+              }
+        </style>
+        
+        
+    </head>
+    <body>
+        {% include 'employee_header.html' %}
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  />Home</a></li>
+                    <li><a href="{% url 'employeeProfile' %}"><img class="icon" src="{% static 'images/profile.png' %}" />Profile</a></li>
+                    <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
+                    <li><a href="{% url 'attendanceSection' %}"><img class="icon" src="{% static 'images/attendance.png' %}" />Attendance Section</a></li>
+                    <li><a href="{% url 'employeePaySleep' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/employeehandbook.png' %}" />Employee Handbook</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/reimbursement.png' %}" />Reimbursment</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/handbook.png' %}" />IT Support Module</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/exit.png' %}" />Exit</a></li>
+                    <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li>
+
+                </ul>
+            </div>
+            {% comment %} Main Content {% endcomment %}
+            <div class="content">
+                <div class="profileheader">
+                    <div class="title">
+                        <h2>Employee Portal</h2>
+                    </div>
+                    <div class="logo">
+                        <div >
+                            <img class="avtar" src="{{user.image.url}}"  />
+                        </div>
+                        <div class="user-1">
+                            <div class="user-name">{{user.name}}</div>
+                            <div class="user-id">{{user.id}}</div>
+                        </div>
+                    </div>
+
+                </div>
+                {% comment %} content {% endcomment %}
+                <div style="padding-left:20px" class="padding">
+                   <h2>2023 </h2>
+                        <table>
+                            <tr>
+                                <th>Total Paid Leaves</th>
+                                <th>Leave Paid Leave Used</th>
+                                <th>Paid Leave Balance</th>
+                                <th>Comm OffLeave </th>
+                            </tr>
+                            <tr>
+                                <td> {{leave.total_paid_leaves}} </td>
+                                <td>{{leave.used_paid_leaves}} </td>
+                                <td>{{leave.paid_leave_balance}} </td>
+                                <td>{{leave.comp_off_leave}} </td>
+                            </tr>
+                           
+                        </table><br><br>
+                        <h3>Recent Leaves </h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for leave in empLeave %}
+                                <tr>
+                                    <td>{{ leave.leave_id }}</td>
+                                    <td>{{ leave.leave_type }}</td>
+                                    <td>{{ leave.leave_from }}</td>
+                                {% if leave.is_aproved %}
+                                    <td>Aproved</td>
+                                {% else %}
+                                    <td>Pending</td>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                      </table>   
+                      <div> <h4> Upcoming Holidays </h4></div>
+                      <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for holiday in holidays %}
+                                <tr>
+                                    <td>{{ holiday.date }}</td>
+                                    <td>{{ holiday.name }}</td>
+                                    <td>{{ holiday.day }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3">No upcoming holidays</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if not out_attendance %}
+                <div style="padding-left:20px">
+                    <h1>Attendance Form</h1>
+                    <div class="form-container">
+                        {% if not in_attendance %}
+                        <form  method="post" action="{% url 'empAttendance' %}">
+                            {% csrf_token %}
+                          <label for="in_time">In-Time Attendance:<input type="checkbox" name="inapprove" id="in_time" value="Approved"></label>
+                          
+                          <input type="submit" value="Submit In Attendance">
+                          <br>
+                        </form>
+                        {% endif %}
+                        {% if not out_attendance %}
+                        <form style="margin-top:10px;" method="post" action="{% url 'empAttendance' %}">
+                            {% csrf_token %}
+                          <label for="outTime">Out-Time Attendance:<input type="checkbox" name="outapprove" id="out_time" value="Approved"></label>
+                          <br>
+                          <input type="submit" value="Submit Out Attendance">
+                        </form>
+                        {% endif %}
+                      </div>
+  
+                </div>
+            {% endif %}
+        </div>
+    </body>
+</html>

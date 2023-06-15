@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee </title>
+        <link rel="stylesheet"  href="{% static 'css/admin_home.css' %}">
+    </head>
+    <body>
+        {% include 'employee_header.html' %}
+        <div class="container">
+                <div class="sidebar">
+                    <ul>
+                        <li>
+                            <div class="menu">
+                                <ul>
+                                  <li>
+                                    <a href="#">Employee</a>
+                                  <ul>
+                                      <li><a href="{% url 'employeeRegistration' %}">Add New Employee</a></li>
+                                      <li><a href="{% url 'aproveLeave' %}">Aprove Employee Leave</a></li>
+                                      <li><a href="{% url 'resetEmployeePassword' %}">Reset Employee Password</a></li>
+                                      <li><a href="#">Delete Employee</a></li>
+                                      <li><a href="{% url 'viewAllEmployee' %}">View</a></li>
+                                      <li>
+                                        <a href="#">Update Employee</a>
+                                        <ul>
+                                          <li><a href="#">Personal Info</a></li>
+                                          <li><a href="#">Educational Info</a></li>
+                                          <li><a href="#">Official Info</a></li>
+                                          <li><a href="#">Work Experience</a></li>
+                                          <li><a href="#">Official Detail</a></li>
+                                        </ul>
+                                      </li>
+                                    </ul>
+                                  </li>
+                                </ul>
+                              <ul>
+                                </li><a href="{% url 'holidayRegistration' %}">Register Holiday</a></li>
+                              </ul><br>
+                              <ul>
+                                </li><a href="{% url 'adminLogout' %}">Log Out</a></li>
+                              </ul>
+                              </div>
+                              
+                       
+                        {% comment %} <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
+                        <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li> {% endcomment %}
+                    </ul>
+                </div>
+           
+        </div>
+    </body>
+</html>

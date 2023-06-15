@@ -1,0 +1,212 @@
+/* Style for the body element */
+
+
+
+.details{
+  background-color: rgb(248, 218, 218);
+  margin:1rem;
+  padding:1rem;
+
+}
+.header {
+  height: 60px;
+  background-color: #f1f1f1;
+}
+a{
+color:#fff
+}
+a:hover{
+color:red
+}
+li{
+list-style: none;
+margin-bottom: 10px;
+}
+
+/* CSS for the main container */
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+}
+
+/* CSS for the vertical menubar */
+.sidebar {
+  width: 20%; 
+  height:auto;
+  background-color: #008494;;
+  min-height: calc(100vh - 60px); 
+  font-weight: 700;
+  top:69px;
+  left:0;
+  position:fixed;
+}
+
+
+/* CSS for the menu list */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin:0;
+  color:#fff;
+}
+
+.menu li {
+  margin-bottom: 10px;
+}
+
+.menu li  {
+  display: block;
+  padding: 10px;
+  background-color: #eaeaea;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.menu li a:hover {
+  background-color: #ccc;
+}
+
+/* CSS for the content */
+
+
+.profileheader{
+display: flex;
+justify-content: center;
+width:100%;
+height: 8vh;
+background-color:#f1b1b1;
+border-style: solid;
+border-top: 1px;
+border-left: 0px;
+
+}
+
+.title{
+display: flex;
+justify-content: left;
+width:50%;
+height: 99%;
+background-color:#fff;
+color:#145477;
+padding: 0px 2px 0px 20px;
+}
+
+.logo{
+display: flex;
+gap:10px;
+flex-direction: row;
+justify-content: right;
+width:50%;
+height: 99%;
+background-color:#fff;
+padding: 0px 50px 0px 00px;
+}
+
+.avtar{
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  width:40px;
+  height: 40px;
+  background-color: #fff;
+  margin-top:10px;
+  border-radius:20px;
+  margin-top:10px;
+  }
+
+.icon{
+width: 20px;
+height: 20px;
+margin:5px 15px 0 0;
+}
+
+.idname{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width:200px;
+  height: 100%;
+}
+.uname{
+  display: flex;
+  width:100%;
+  height: 49%;
+}
+.uid{
+  width:100%;
+  height: 49%;
+}
+.user1{
+  height: 40px;
+  width: 100px;
+  background-color: green;
+}
+
+
+/* CSS for responsiveness */
+@media screen and (max-width: 768px) {
+  .container {
+      flex-direction: column;
+  }
+
+  .sidebar {
+      width: 20%;
+  font-weight: 600;
+  }
+
+  .content {
+      width: 100%;
+  }
+}
+
+
+
+.user-1{
+  height: 100%;
+  width: 50%;
+  background-color: #fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+ 
+}
+
+.user-name{
+  display:flex;
+  justify-Content:left;
+  height:50%;
+  width:auto;
+  padding-top:5px;
+  color:#145477;
+
+}
+.user-id{
+  display:flex;
+  justify-Content:left;
+  height:50%;
+  width:auto;
+  padding-bottom:5px;
+}
+ 
+table {
+  width: 90%;
+  border-collapse: collapse;
+  background-color: rgb(248, 218, 218);
+  text-align:center;
+
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+th{
+  background-color: rgb(153, 240, 150);
+}
+.padding{
+  padding:2rem;
+}

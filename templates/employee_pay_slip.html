@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee </title>
+        <link rel="stylesheet"  href="{% static 'css/employee_base.css' %}">
+        {% comment %} <link rel="stylesheet"  href="{% static 'css/employee_home_data.css' %}"> {% endcomment %}
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin:0;
+                
+                background-color:#fff;
+                width:100%;
+                height: 100%;
+              }
+              .profileheader{
+                top:70px;
+                right:0;
+                position:fixed;
+                width:80%;
+                border:0px;
+              } 
+              .content {
+                width:80%;
+                background-color: #fff;
+                margin-left:300px;
+              }
+              .padding{
+                top:75px;
+    
+              }
+              .content-body{
+                height:auto;
+                display:flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                width:100%;
+                padding:80px 20px 20px 20px;
+               
+              }
+              .container2 {
+                max-width: 500px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f2f2f2;
+                border-radius: 5px;
+            }
+            
+            h1 {
+                text-align: center;
+            }
+            
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            button {
+                align-self: flex-end;
+                margin-top: 10px;
+            }
+            
+           
+              
+              @media screen and (max-width: 480px) {
+                .form-container {
+                  max-width: 100%;
+                  padding: 0 20px;
+                }
+              }
+        </style>
+        
+        
+    </head>
+    <body>
+        {% include 'employee_header.html' %}
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  />Home</a></li>
+                    <li><a href="{% url 'employeeProfile' %}"><img class="icon" src="{% static 'images/profile.png' %}" />Profile</a></li>
+                    <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
+                    <li><a href="{% url 'attendanceSection' %}"><img class="icon" src="{% static 'images/attendance.png' %}" />Attendance Section</a></li>
+                    <li><a href="{% url 'employeePaySleep' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/employeehandbook.png' %}" />Employee Handbook</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/reimbursement.png' %}" />Reimbursment</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/handbook.png' %}" />IT Support Module</a></li>
+                    <li><a href="#"><img class="icon" src="{% static 'images/exit.png' %}" />Exit</a></li>
+                    <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li>
+
+                </ul>
+            </div>
+            {% comment %} Main Content {% endcomment %}
+            <div class="content">
+                <div class="profileheader">
+                    <div class="title">
+                        <h2>Employee Portal</h2>
+                    </div>
+                    <div class="logo">
+                        <div >
+                            <img class="avtar" src="{{user.image.url}}"  />
+                        </div>
+                        <div class="user-1">
+                            <div class="user-name">{{user.name}}</div>
+                            <div class="user-id">{{user.id}}</div>
+                        </div>
+                    </div>
+               </div>
+            {% comment %} Content {% endcomment %}
+            <div class="content-body">
+              <div class="container2">
+                <h2>Select Month and year</h2>
+                <form method="post" action="{% url 'employeePaySleep' %}">
+                  {% csrf_token %}
+                  <label for="year">Year:</label>
+                  <select id="year" name="year">
+                    {% for year in years %}
+                    <option value="{{year}}">{{year}}</option>
+                    {% endfor %}
+                    <!-- Add more options as needed -->
+                  </select>
+                
+                  <label for="month">Month:</label>
+                  <select id="month" name="month">
+                    {% for month in months %}
+                    <option value="{{month}}">{{month}}</option>
+                    {% endfor %}
+                    <!-- Add more options as needed -->
+                  </select>
+                
+                  <button type="submit">Submit</button>
+                </form>
+                <p style="color:red">{{ error }}</p>
+            </div>
+            </div>
+             {% comment %} Content End{% endcomment %}  
+        </div>
+
+    </body>
+</html>

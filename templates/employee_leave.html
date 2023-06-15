@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee </title>
+        <link rel="stylesheet"  href="{% static 'css/employee_base.css' %}">
+ 
+
+        <style>
+            table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+              
+              table, th, td {
+                border: 1px solid black;
+              }
+              body {
+                font-family: Arial, sans-serif;
+                margin:0;
+                background-color:#fff;
+              }
+              .profileheader{
+                top:70px;
+                right:0;
+                position:fixed;
+                width:80%;
+                border:0px;
+              } 
+              .container {
+                width: 80%;
+                background-color: #fff;
+                margin-left:20%;
+                top:80px;
+              }
+              .content{
+                width:100%;
+                height:auto;
+              }
+              
+        </style>
+    </head>
+    <body>
+        {% include 'employee_header.html' %}
+        <div class="container">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  />Home</a></li>
+                    <li><a href="{% url 'employeeProfile' %}"><img class="icon" src="{% static 'images/profile.png' %}" />Profile</a></li>
+                    <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
+                    <li><a href="{% url 'attendanceSection' %}"><img class="icon" src="{% static 'images/attendance.png' %}" />Attendance Section</a></li>
+                    <li><a href="{% url 'employeePaySleep' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/employeehandbook.png' %}" />Employee Handbook</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/reimbursement.png' %}" />Reimbursment</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/handbook.png' %}" />IT Support Module</a></li>
+                    <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/exit.png' %}" />Exit</a></li>
+                    <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li>
+
+                </ul>
+            </div>
+            {% comment %} Main Content {% endcomment %}
+            <div class="content">
+                <div class="profileheader">
+                    <div class="title">
+                        <h2>Employee Portal</h2>
+                    </div>
+                    <div class="logo">
+                        <div >
+                            <img class="avtar" src="{{user.image.url}}"  />
+                        </div>
+                        <div class="user-1">
+                            <div class="user-name">{{user.name}}</div>
+                            <div class="user-id">{{user.id}}</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="padding">
+                    <div class="title"><h2>Leave</h2></div>
+                    <div class="table-container"></div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Date from</th>
+                            <th>Date Till</th>
+                            <th>Number Of Days </th>
+                            <th>Reason </th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for leave in empLeave %}
+                          <tr>
+                            <td>{{ leave.leave_id }}</td>
+                            <td>{{ leave.leave_type }}</td>
+                            <td>{{ leave.leave_from }}</td>
+                            <td>{{ leave.leave_till }}</td>
+                            <td>{{ leave.number_of_days }}</td>
+                            <td>{{ leave.leave_reason }}</td>
+                            {% if leave.is_aproved %}
+                                <td>Aproved</td>
+                            {% else %}
+                                <td>Pending</td>
+                            {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                      <h3><a href="{% url 'employeeLeaveRegistration' %} " style="color:black"> Add Leave </a></h3>
+                  </div>
+        </div>
+        
+    </body>
+</html>

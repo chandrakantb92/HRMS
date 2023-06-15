@@ -1,0 +1,70 @@
+{% comment %} {% include 'base.html' %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Leave</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="title"> <h1></h1> </div>
+        {% block content %}
+            <div class="container">
+                <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                         <div class="card-header"><h3>Add Leave </h3></div> 
+                            <div class="card-body">
+
+
+                        <form method="POST" action="{% url 'employeeLeaveRegistration' %}">
+                            {% csrf_token %}
+                            <div class="col-md-4 col-form-label text-md-right"><h5>Leave Details</h5></div>
+                            <div class="form-group row">
+                                <label for="id" class="col-md-4 col-form-label text-md-right"> Leave Type</label>
+                                <div class="col-md-6">
+                                    <select id="leave_type" class="form-control" name="leave_type" >
+                                            <option value="paid" class="form-control">Paid Leave</option>
+                                            <option value="casual" class="form-control">Casual Leave</option>
+                                            <option value="half" class="form-control">Half Day Leave</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+                            <div class="form-group row">
+                                <label for="leave_from" class="col-md-4 col-form-label text-md-right"> From </label>
+                                    <div class="col-md-6">
+                                        <input id="leave_from" type="date" class="form-control" name="leave_from" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="leave_till" class="col-md-4 col-form-label text-md-right"> Till </label>
+                                    <div class="col-md-6">
+                                        <input id="leave_till" type="date" class="form-control" name="leave_till" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="number_of_days" class="col-md-4 col-form-label text-md-right"> Number Of Days </label>
+                                    <div class="col-md-6">
+                                        <input id="number_of_days" type="text" class="form-control" name="number_of_days" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="leave_reason" class="col-md-4 col-form-label text-md-right"> Leave Reason </label>
+                                    <div class="col-md-6">
+                                        <input id="leave_reason" type="text" class="form-control" name="leave_reason" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group button">
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+        {% endblock %}
+    </body>
+</html>

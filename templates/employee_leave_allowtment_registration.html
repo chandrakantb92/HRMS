@@ -1,0 +1,177 @@
+{% comment %} {% include 'base.html' %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Employee Education Details</title>
+  <link rel="stylesheet" href="{%  static 'css/bootstrap.css' %}">
+</head>
+<body>
+    <div class="title"> <h1></h1> </div>
+    {% block content %}
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card">
+              <h3> <div class="card-header">Employee Leave Allowtment</div> </h3>
+              <div class="card-body">
+                <form method="POST" action="{% url 'employeeEducationRegistration' %}">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="id" class="col-md-4 col-form-label text-md-right"> Select Employee</label>
+                        <div class="col-md-6">
+                            <select id="id" class="form-control" name="id" >
+                                {% for employee in employees  %}
+                                    <option value="{{ employee.id }}" class="form-control">{{ employee.id }} {{ employee.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-form-label text-md-right"><h5>SSc Details</h5></div>
+                    <div class="form-group row">
+                        <label for="ssc_school_name" class="col-md-4 col-form-label text-md-right">School Name</label>
+                            <div class="col-md-6">
+                                <input id="ssc_school_name" type="text" class="form-control" name="ssc_school_name" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ssc_passout_year" class="col-md-4 col-form-label text-md-right">Year Of Passing</label>
+                            <div class="col-md-6">
+                                <input id="ssc_passout_year" type="text" class="form-control" name="ssc_passout_year" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ssc_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                            <div class="col-md-6">
+                                <input id="ssc_percentage" type="text" class="form-control" name="ssc_percentage" required>
+                            </div>
+                    </div>
+
+                    <div class="col-md-4 col-form-label text-md-right"><h5>HSC Details</h5></div>
+                    <div class="form-group row">
+                        <label for="hsc_college_name" class="col-md-4 col-form-label text-md-right">College Name</label>
+                            <div class="col-md-6">
+                                <input id="hsc_college_name" type="text" class="form-control" name="hsc_college_name" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="hsc_passout_year" class="col-md-4 col-form-label text-md-right">Year Of Passing</label>
+                            <div class="col-md-6">
+                                <input id="hsc_passout_year" type="text" class="form-control" name="hsc_passout_year" required>
+                            </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="hsc_stream" class="col-md-4 col-form-label text-md-right">Stream</label>
+                            <div class="col-md-6">
+                                <input id="hsc_stream" type="text" class="form-control" name="hsc_stream" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="hsc_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                            <div class="col-md-6">
+                                <input id="hsc_percentage" type="text" class="form-control" name="hsc_percentage" required>
+                            </div>
+                    </div>
+
+                    <div class="col-md-4 col-form-label text-md-right"><h5>UG Details</h5></div>
+                    <div class="form-group row">
+                        <label for="ug_college_name" class="col-md-4 col-form-label text-md-right">College Name</label>
+                            <div class="col-md-6">
+                                <input id="ug_college_name" type="text" class="form-control" name="ug_college_name" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ug_passout_year" class="col-md-4 col-form-label text-md-right">Year Of Passing</label>
+                            <div class="col-md-6">
+                                <input id="ug_passout_year" type="text" class="form-control" name="ug_passout_year" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ug_stream" class="col-md-4 col-form-label text-md-right">Stram</label>
+                            <div class="col-md-6">
+                                <input id="ug_stream" type="text" class="form-control" name="ug_stream" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ug_specialization" class="col-md-4 col-form-label text-md-right">Specialization</label>
+                            <div class="col-md-6">
+                                <input id="ug_specialization" type="text" class="form-control" name="ug_specialization" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="ug_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                            <div class="col-md-6">
+                                <input id="ug_percentage" type="text" class="form-control" name="ug_percentage" required>
+                            </div>
+                    </div>
+
+                    <div class="col-md-4 col-form-label text-md-right"><h5>PG Details</h5></div>
+                    <div class="form-group row">
+                        <label for="pg_college_name" class="col-md-4 col-form-label text-md-right">College Name</label>
+                            <div class="col-md-6">
+                                <input id="pg_college_name" type="text" class="form-control" name="pg_college_name" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pg_passout_year" class="col-md-4 col-form-label text-md-right">Year Of Passing</label>
+                            <div class="col-md-6">
+                                <input id="pg_passout_year" type="text" class="form-control" name="pg_passout_year" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pg_stream" class="col-md-4 col-form-label text-md-right">Stram</label>
+                            <div class="col-md-6">
+                                <input id="pg_stream" type="text" class="form-control" name="pg_stream" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pg_specialization" class="col-md-4 col-form-label text-md-right">Specialization</label>
+                            <div class="col-md-6">
+                                <input id="pg_specialization" type="text" class="form-control" name="pg_specialization" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="pg_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                            <div class="col-md-6">
+                                <input id="pg_percentage" type="text" class="form-control" name="pg_percentage" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="education_gap" class="col-md-4 col-form-label text-md-right">Education Gap </label>
+                            <div class="col-md-6">
+                                <input id="education_gap" type="text" class="form-control" name="education_gap" required>
+                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="gap_reason" class="col-md-4 col-form-label text-md-right">Gap Reason</label>
+                            <div class="col-md-6">
+                                <input id="gap_reason" type="text" class="form-control" name="gap_reason" required>
+                            </div>
+                    </div>
+    
+                 
+    
+                  <div class="form-group button">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                  
+    {% endblock %}
+        </form>
+</body>
+</html>

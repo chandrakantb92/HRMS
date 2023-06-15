@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.3/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div id="slip">
+    <!-- Your content here -->
+  </div>
+  <button onclick="convertToPDF()">Print</button>
+
+  <script>
+    function convertToPDF() {
+      const slipElement = document.getElementById('slip');
+      const slipHTML = slipElement.innerHTML;
+
+      // Create a new jsPDF instance
+      const doc = new jsPDF();
+
+      // Convert slip div to canvas
+      html2canvas(slipElement, { scale: 2 }).then((canvas) => {
+        const imageData = canvas.toDataURL('image/png');
+        const imageWidth = canvas.width * 0.75;
+        const imageHeight = canvas.height * 0.75;
+        doc.addImage(imageData, 'PNG', 15, 15, imageWidth, imageHeight);
+        doc.save('slip.pdf');
+      });
+    }
+  </script>
+
+  <!-- Include html2canvas library -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>

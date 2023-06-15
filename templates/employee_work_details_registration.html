@@ -1,0 +1,68 @@
+{% comment %} {% include 'base.html' %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee Work  Details</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="title"> <h1></h1> </div>
+        {% block content %}
+            <div class="container">
+                <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                         <div class="card-header"><h3>Employee Work  Details</h3></div> 
+                            <div class="card-body">
+                        <form method="POST" action="{% url 'employeeWorkDetailsRegistration' %}">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id" class="col-md-4 col-form-label text-md-right"> Select Employee</label>
+                                <div class="col-md-6">
+                                    <select id="id" class="form-control" name="id" >
+                                        {% for employee in employees %}
+                                            <option value="{{ employee.id }}" class="form-control">{{ employee.id }} {{ employee.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 col-form-label text-md-right"><h5>Internship Details</h5></div>
+                            <div class="form-group row">
+                                <label for="internship_start_date" class="col-md-4 col-form-label text-md-right"> Start Date </label>
+                                    <div class="col-md-6">
+                                        <input id="internship_start_date" type="date" class="form-control" name="internship_start_date" required>
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="internship_end_date" class="col-md-4 col-form-label text-md-right">End Date</label>
+                                    <div class="col-md-6">
+                                        <input id="internship_end_date" type="date" class="form-control" name="internship_end_date" required>
+                                    </div>
+                            </div>
+
+                            <div class="col-md-4 col-form-label text-md-right"><h5>Work  Details</h5></div>
+                            <div class="form-group row">
+                                <label for="date_of_joining" class="col-md-4 col-form-label text-md-right"> Start Date </label>
+                                    <div class="col-md-6">
+                                        <input id="date_of_joining" type="date" class="form-control" name="date_of_joining" required>
+                                    </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="date_of_leave" class="col-md-4 col-form-label text-md-right">End Date</label>
+                                    <div class="col-md-6">
+                                        <input id="date_of_leave" type="date" class="form-control" name="date_of_leave" required>
+                                    </div>
+                            </div>
+
+                            <div class="form-group button">
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+        {% endblock %}
+    </body>
+</html>

@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 import hashlib
+from hrmsApp.models import *
 
 def hash_password(password):
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
@@ -38,7 +39,7 @@ def employeeRegistration(request):
 
 # TODO Rename this here and in `employeeRegistration`
 def employee_registrarion(request):
-    employee=Employee()
+            employee=Employee()
     employee.emp_id=Employee.objects.count()+1
     employee.name=request.POST.get('name')
     employee.username=request.POST.get('username')

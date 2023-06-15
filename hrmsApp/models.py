@@ -59,7 +59,6 @@ class EmployeeEducationDetails(models.Model):
     education_gap=models.CharField(max_length=10, blank=True, null=True)
     gap_reason=models.CharField(max_length=100, blank=True, null=True)
     
-    
     def __str__(self):
         return self.addr
     class Meta:

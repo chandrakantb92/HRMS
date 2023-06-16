@@ -4,9 +4,10 @@
 <html>
 <head>
     <title>Employee Leave List</title>
-    <link rel="stylesheet" href="{% static 'css/view_leave.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leave.css' %}">
 </head>
 <body>
+    {% include 'employee_header.html' %}
     <h3><a href="{% url 'aproveLeave' %}">View Pending Leave </a></h3>
     <div class="container">
         <h1>Employee Leave List</h1>

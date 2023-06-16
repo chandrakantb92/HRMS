@@ -1,13 +1,14 @@
-<!-- your_app/employee_leave_list.html -->
 {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Employee Leave List</title>
-    <link rel="stylesheet" href="{% static 'css/view_leave.css' %}">
+    <link rel="stylesheet" href="{% static 'css/leave.css' %}"> 
+        
 </head>
-<body>
-    <h3><a href="{% url 'viewAllLeave' %}">View All </a></h3>
+<body >
+    {% include 'employee_header.html' %}
+    <span><h3><a href="{% url 'viewAllLeave' %}">View All </a></h3></span><br/>
     <div class="container">
         <h1>Employee Leave List</h1>
         <table>
@@ -55,5 +56,6 @@
             {% endfor %}
         </table>
     </div>
+  
 </body>
 </html>

@@ -14,7 +14,7 @@
                             <div class="menu">
                                 <ul>
                                   <li>
-                                    <a href="#">Employee</a>
+                                    <a style="color:#FFFFFF;margin-left:0px;" href="#">Employee</a>
                                   <ul>
                                       <li><a href="{% url 'employeeRegistration' %}">Add New Employee</a></li>
                                       <li><a href="{% url 'aproveLeave' %}">Aprove Employee Leave</a></li>
@@ -35,16 +35,13 @@
                                   </li>
                                 </ul>
                               <ul>
-                                </li><a href="{% url 'holidayRegistration' %}">Register Holiday</a></li>
+                                </li  ><a style="padding-left: 10px;" href="{% url 'holidayRegistration' %}">Register Holiday</a></li>
                               </ul><br>
                               <ul>
-                                </li><a href="{% url 'adminLogout' %}">Log Out</a></li>
+                                </li><a style="padding-left: 10px;" href="{% url 'adminLogout' %}">Log Out</a></li>
                               </ul>
                               </div>
-                              
-                       
-                        {% comment %} <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
-                        <li><a href="{% url 'employeeLogout' %}"><img class="icon" src="{% static 'images/logout.png' %}" />Logout</a></li> {% endcomment %}
+
                     </ul>
                 </div>
            

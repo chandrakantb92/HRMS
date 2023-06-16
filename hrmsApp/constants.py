@@ -1,0 +1,40 @@
+"""Calender dictionary"""
+MONTH_DICT=[
+    {'1':'January'},
+    {'2':'February'},
+    {'3':'March'},
+    {'4':'April'},
+    {'5':'May'},
+    {'6':'June'},
+    {'7':'July'},
+    {'8':'August'},
+    {'9':'September'},
+    {'10':'October'},
+    {'12':'November'},
+    {'12':'December'},
+]
+
+YEAR_DIC=[
+    
+]
+
+"""HTTP Responce"""
+# status code
+HTTP_100_CONTINUE = 100
+HTTP_200_OK = 200
+HTTP_201_CREATED = 201
+HTTP_202_ACCEPTED = 202
+HTTP_204_NO_CONTENT = 204
+HTTP_400_BAD_REQUEST = 400
+HTTP_401_UNAUTHORIZED = 401
+HTTP_403_FORBIDDED = 403
+HTTP_404_NOT_FOUND = 404
+HTTP_405_METHOD_NOT_ALLOWED = 405
+HTTP_408_REQUEST_TIMEOUT = 408
+HTTP_423_LOCKED = 423
+HTTP_429_RATE_LIMITING = 429
+HTTP_500_INTERNAL_SERVER_ERROR = 500
+HTTP_501_NOT_IMPLEMENTED = 501
+HTTP_502_BAD_GATEWAY = 502
+HTTP_503_SERVICE_UNAVAILABLE = 503
+HTTP_504_GATEWAT_TIMEOUT = 504

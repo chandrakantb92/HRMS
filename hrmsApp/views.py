@@ -1,4 +1,6 @@
 #Libraries
+from pickle import EMPTY_DICT
+import random
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 import hashlib
@@ -11,6 +13,7 @@ from hrmsProject import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
+from hrmsApp import template
 
 
 #Return id of loged in user(System Automation)
@@ -608,31 +611,82 @@ def isOutAttendenceSaved():
         return False   
 
 """System generated email """
-def sendEmail(request):
+def sendMailOtp(otp,reicever_email):
     try:
-        text = '<div style="background-color:pink;padding:10px;">Hello test email</div>'
+        text = template.OTP_AUTHENTICATOIN_MAIL_TEMPLATE
+        text=text.replace('mail_otp', str(otp))
         subject = 'Test email'
         from_email = settings.DEFAULT_FROM_EMAIL
-        to_email=["chandrakant.b@sankeysolutions.com"]
+        to_email=[reicever_email]
         msg = EmailMultiAlternatives(
-             subject, text ,from_email, to_email)
+            subject, text ,from_email, to_email)
         msg.attach_alternative(text,"text/html")
         msg.send()
         print("Mail sent successfully")
         time=str(datetime.now())
-        return JsonResponse({'STATUS':200,'MESSEGE':'SUCCESS', 'TIME':time})
+        return True
     except Exception as e:
         print(e)
-        return HttpResponse(str(e))
+        return False
  
+ 
+def getEmployeeByIdOrUsername(username):
+    try:
+        username = username
+        return Employee.objects.get(username=username).id
+    except Exception as e:
+        return False
+    
 def forgetPassword(request):
-        return render(request, 'employee_send_otp.html')
+    if request.method=="POST": 
+        try:
+            if emp_id := getEmployeeByIdOrUsername(request.POST.get('username')):
+                otp = random.randint(100000,999999)
+                employee = Employee.objects.get(id=emp_id)
+                email = employee.company_email
+                if sendMailOtp(otp,email):
+                    OtpAuthentication.objects.all().delete()
+                    auth = OtpAuthentication.objects.create(emp_id=employee, otp=str(otp))
+                    return redirect('verifyOTP')
+                return HttpResponse("Internal server error")
+            return render(request, 'employee_send_otp.html',{'error':'User not found'})
+        except Exception as e:
+            return HttpResponse(e)
+    return render(request, 'employee_send_otp.html',{'error':''})
+    
     
 def verifyOTP(request):
     if request.method=="POST":
         try:
-            otp=request.POST.get('otp')
-            return HttpResponse(f'success otp {otp}')
+            sent_otp = OtpAuthentication.objects.first().otp
+            entered_otp = int(( request.POST.get('digit1') + request.POST.get('digit2') + request.POST.get('digit3') +  request.POST.get('digit4') + request.POST.get('digit5') + request.POST.get('digit6') ))
+            if str(sent_otp)==str(entered_otp):
+                s = OtpAuthentication.objects.all().first()
+                s.status = True
+                s.save()
+                return redirect("resetEmpPasswordByEmployee")
+            return render(request, 'otp_verification.html',{'error':"OTP does not match"})
         except Exception as e:
-            return HttpResponse("ERROR")
+            return HttpResponse(e)
     return render(request, 'otp_verification.html')
+
+def resetEmpPasswordByEmployee(request):
+    try:
+        if auth:= OtpAuthentication.objects.all().first():
+            try:
+                if request.method=="POST":
+                    if auth.status==True:
+                        employee = Employee.objects.get(id=auth.emp_id.id)
+                        employee.password=hash_password(request.POST.get('password'))
+                        employee.save()
+                        OtpAuthentication.objects.all().delete()
+                        return redirect('employeeLogin')
+                    return redirect('forgetPassword')
+                return render(request, 'reset_emp_password_by_employee.html')
+            except Exception as e:
+                print(e)
+                return HttpResponse("Internal Server Error")  
+        return JsonResponse({'status':401,'Message':'Unauthorised access'})     
+    except Exception as e:
+        print(e)
+        return HttpResponse("Internal Server Error")  

@@ -55,7 +55,7 @@ urlpatterns = [
     path('empAttendance/',  empAttendance, name='empAttendance'),
     path('attendanceSection/',  attendanceSection, name='attendanceSection'),
     path('employeePaySleep/',  employeePaySleep, name='employeePaySleep'),
-    path('sendEmail/',  sendEmail, name='sendEmail'),
+    path('resetEmpPasswordByEmployee/',  resetEmpPasswordByEmployee, name='resetEmpPasswordByEmployee'),
     path('forgetPassword/',  forgetPassword, name='forgetPassword'),
     path('verifyOTP/',  verifyOTP, name='verifyOTP'),
     #path('<path:not_found>', handler404),

@@ -43,6 +43,9 @@ class AdminsAdmin(admin.ModelAdmin):
 class AdminLoginAdmin(admin.ModelAdmin):
     list_display=('admin_id','password','role','logindatetime')
     
+class OtpAuthAdmin(admin.ModelAdmin):
+    list_display=('emp_id','otp','time','status')
+    
 #admin.site.register( , )    
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(EmployeeEducationDetails, EmpEduDetAdmin)
@@ -58,3 +61,4 @@ admin.site.register(Salary, SalaryAdmin)
 admin.site.register(EmployeeLogin, EmpLoginAdmin)
 admin.site.register(Admins, AdminsAdmin)
 admin.site.register(AdminLogin, AdminLoginAdmin)
+admin.site.register(OtpAuthentication,OtpAuthAdmin)

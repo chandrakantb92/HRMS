@@ -220,3 +220,12 @@ class AdminLogin(models.Model):
     class Meta:
         db_table = "admin_login"
         
+class OtpAuthentication(models.Model):
+    emp_id=models.ForeignKey(Employee, on_delete=models.CASCADE)
+    time=models.TimeField(auto_now=True)
+    otp=models.CharField(max_length=6,blank=True)
+    status=models.BooleanField(default=False)
+    def __str__(self):
+        return str(self.emp_id.name)
+    class Meta:
+        db_table="otpauthentication"

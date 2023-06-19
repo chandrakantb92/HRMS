@@ -626,13 +626,30 @@ def sendEmail(request):
         return HttpResponse(str(e))
  
 def forgetPassword(request):
-        return render(request, 'employee_send_otp.html')
+    if request.method=='POST':
+        try:
+            if username := request.POST.get('username'):
+                if employee := getUserbyUser(username):
+                    return redirect('verifyOTP')
+                return render(request, 'employee_forget_password.html',{'error':"Employee does not exist"})
+            return JsonResponse({'status':401, 'message':'Unauthorised'})
+        except Exception as e:
+            return HttpResponse("Error")
+    return render(request, 'employee_forget_password.html', {'error':""})
     
 def verifyOTP(request):
     if request.method=="POST":
         try:
-            otp=request.POST.get('otp')
+            otp = request.POST.get('d1')  #+ request.POST.get('d2') + request.POST.get('d3') + request.POST.get('d4') + request.POST.get('d5') + request.POST.get('d6')
+            otp=int(otp)
+            print(otp)
             return HttpResponse(f'success otp {otp}')
         except Exception as e:
-            return HttpResponse("ERROR")
+            return HttpResponse(e)
     return render(request, 'otp_verification.html')
+
+def getUserbyUser(username):
+    try:
+        return Employee.objects.get(username = username)
+    except Exception as e:
+        return False

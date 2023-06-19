@@ -3,83 +3,118 @@
 <html>
 <head>
   <title>OTP Verification</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/otp_verification.css' %}">
+  <style>
+    body {
+      text-align: center;
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+    
+    h2 {
+      color: #333;
+      margin-top: 40px;
+    }
+    
+    .container {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    
+    .otp-input {
+      display: inline-block;
+      border: 1px solid #ccc;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      margin: 5px;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+    
+    .otp-input:focus {
+      outline: none;
+      border-color: #5cace2;
+      box-shadow: 0 0 5px #5cace2;
+    }
+    
+    button {
+      background-color: #5cace2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    
+    button:hover:not(:disabled) {
+      background-color: #418db9;
+    }
+    
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>OTP Verification</h1>
-  <div class="otp-container">
-    <input type="text" maxlength="1" class="otp-input" id="otp1" oninput="moveToNext(this, 2)" onkeyup="checkButtonState()" autofocus>
-    <input type="text" maxlength="1" class="otp-input" id="otp2" oninput="moveToNext(this, 3)" onkeyup="checkButtonState()" autofocus>
-    <input type="text" maxlength="1" class="otp-input" id="otp3" oninput="moveToNext(this, 4)" onkeyup="checkButtonState()" autofocus>
-    <input type="text" maxlength="1" class="otp-input" id="otp4" oninput="moveToNext(this, 5)" onkeyup="checkButtonState()" autofocus>
-    <input type="text" maxlength="1" class="otp-input" id="otp5" oninput="moveToNext(this, 6)" onkeyup="checkButtonState()" autofocus>
-    <input type="text" maxlength="1" class="otp-input" id="otp6" oninput="moveToNext(this, null)" onkeyup="checkButtonState()" autofocus>
-  </div>
-  <button id="verify-btn" onclick="verifyOTP()" disabled>Verify OTP</button>
-  <script>
-    function moveToNext(currentInput, nextInputId) {
-        const maxLength = currentInput.getAttribute("maxlength");
-        const currentLength = currentInput.value.length;
-      
-        if (currentLength === maxLength) {
-          if (nextInputId !== null) {
-            const nextInput = document.getElementById("otp" + nextInputId);
-            nextInput.readOnly = false;
-            nextInput.focus();
-          }
-        }
-      }
-      
-      function checkButtonState() {
-        const otpInputs = document.getElementsByClassName("otp-input");
-        const verifyButton = document.getElementById("verify-btn");
-      
-        let filledCount = 0;
-        let otpValue = "";
-        for (let i = 0; i < otpInputs.length; i++) {
-          const otpInput = otpInputs[i];
-          otpValue += otpInput.value;
-      
-          if (otpInput.value.length === 1) {
-            filledCount++;
-          } else {
-            break;
-          }
-        }
-      
-        if (filledCount === otpInputs.length) {
-          verifyButton.disabled = false;
-        } else {
-          verifyButton.disabled = true;
-        }
-      
-        // Store the combined OTP value
-        document.getElementById("otpValue").value = otpValue;
-      }
-      
-      function verifyOTP() {
-        const otpValue = document.getElementById("otpValue").value;
-      
-        // Perform OTP verification or other actions
-        console.log("OTP:", otpValue);
-      
-        // Send OTP value to the backend using AJAX or form submission
-        // Example using AJAX with jQuery:
-        $.ajax({
-             url: "{% url 'verifyOTP' %}",
-             method: "POST",
-             data: { otp : otpValue },
-             success: function(response) {
-                 // Handle response from the backend
-             },
-             error: function(error) {
-                 // Handle error
-             }
-         }); 
-      }
-      
-  </script>  
-
-  <script src="{% static 'script/otp_verification.js' %}"></script>
+  <h2>OTP Verification</h2>
+  <div> <h3>OTP has sent to your email </h3> </div>
+  <form id="otp-form" method="post" action="{% url 'verifyOTP' %}">
+    {% csrf_token %}
+    <div>
+      <input class="otp-input" type="text" maxlength="1" name="digit1" id="d1" pattern="[0-9]" required autofocus>
+      <input class="otp-input" type="text" maxlength="1" name="digit2" id="d2" pattern="[0-9]" required>
+      <input class="otp-input" type="text" maxlength="1" name="digit3" id="d3" pattern="[0-9]" required>
+      <input class="otp-input" type="text" maxlength="1" name="digit4" id="d4" pattern="[0-9]" required>
+      <input class="otp-input" type="text" maxlength="1" name="digit5" id="d5" pattern="[0-9]" required>
+      <input class="otp-input" type="text" maxlength="1" name="digit6" id="d6" pattern="[0-9]" required>
+    </div>
+    <br>
+    <div> <h4>{{error}} </h4></div>
+    <button id="verify-btn" type="submit">Verify OTP</button>
+  </form>
 </body>
+<script>
+  window.onload = function() {
+    const otpBoxes = document.getElementsByClassName('otp-input');
+    const verifyButton = document.getElementById('verify-btn');
+
+    // Disable the verify button initially
+    verifyButton.disabled = true;
+
+    // Set focus on the first input box
+    otpBoxes[0].focus();
+
+    // Event listener for input boxes
+    Array.from(otpBoxes).forEach(function(box, index) {
+      box.addEventListener('input', function() {
+        // Remove non-numeric characters from input
+        this.value = this.value.replace(/[^0-9]/g, '');
+
+        // Move focus to the next box if input is valid
+        if (this.value.length === 1 && index < otpBoxes.length - 1) {
+          otpBoxes[index + 1].focus();
+        }
+
+        // Check if all boxes are filled
+        const isFilled = Array.from(otpBoxes).every(function(box) {
+          return box.value.length === 1;
+        });
+
+        // Enable or disable the verify button based on box filling status
+        verifyButton.disabled = !isFilled;
+      });
+    });
+
+  };
+</script>
 </html>

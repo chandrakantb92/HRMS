@@ -227,3 +227,33 @@ class OtpAuthentication(models.Model):
         return str(self.emp_id.name)
     class Meta:
         db_table="otpauthentication"
+        
+class EmployeePSlip(models.Model):
+    slip_num = models.IntegerField(default=0)
+    emp_id=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    month=models.CharField(max_length=30)
+    year=models.CharField(max_length=30)
+    basic=models.CharField(max_length=20, default='0')
+    hra=models.CharField(max_length=20,default='0')
+    travel_allowence=models.CharField(max_length=20,default='0')
+    medical_allowence=models.CharField(max_length=20,default='0')
+    other_allowence=models.CharField(max_length=20,default='0')
+    arrears=models.CharField(max_length=20,default='0')
+    leave_encashment=models.CharField(max_length=20,default='0')
+    bonus=models.CharField(max_length=20,default='0')
+    provident_fund=models.CharField(max_length=20,default='0')
+    esic=models.CharField(max_length=20,default='0')
+    professional_tax=models.CharField(max_length=20,default='0')
+    other_charges=models.CharField(max_length=20,default='0')
+    tds=models.CharField(max_length=20,default='0')
+    advances=models.CharField(max_length=20,default='0')
+    total_deduction=models.CharField(max_length=20,default='0')
+    total_earning=models.CharField(max_length=20,default='0')
+    net_pay=models.CharField(max_length=20,default='0')
+    issued_date=models.DateField(auto_now=True)
+    status=models.BooleanField(default=False)
+    created_by=models.CharField(max_length=50)
+    def __str__(self):
+        return str(self.emp_id.name)
+    class Meta:
+        db_table="employee_pay_slip"

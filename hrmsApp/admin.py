@@ -23,7 +23,7 @@ class EmpLeaveAdmin(admin.ModelAdmin):
     list_display=('emp_id','leave_id','leave_type','leave_from','leave_till','number_of_days','leave_reason','is_aproved',  ) #'total_paid_leaves','used_paid_leaves','paid_leave_balance'
 
 class LeaveAdmin(admin.ModelAdmin):
-    list_display=('emp_id','total_paid_leaves','used_paid_leaves','paid_leave_balance','comp_off_leave')
+    list_display=('emp_id','total_paid_leaves','used_paid_leaves','paid_leave_balance','comp_off_leave','encashment_leave')
     
 class HolidayAdmin(admin.ModelAdmin):
     list_display=('id','name','date','day')

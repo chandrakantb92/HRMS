@@ -142,11 +142,13 @@ class Leave(models.Model):
     used_paid_leaves=models.IntegerField(default=0)
     paid_leave_balance=models.IntegerField(default=1)
     comp_off_leave=models.IntegerField(default=0)
+    encashment_leave = models.IntegerField(default=0)
+    total_casual_leaves=models.IntegerField(default=0)
     def __str__(self):
         return str(self.emp_id)
     class Meta:
         db_table = "leave"
-list_display=('emp_id','total_paid_leaves','used_paid_leaves','paid_leave_balance','comp_off_leave')
+list_display=('emp_id','total_paid_leaves','used_paid_leaves','paid_leave_balance','comp_off_leave','encashment_leave','total_casual_leaves')
         
 #Holiday Model
 class Holiday(models.Model):

@@ -137,7 +137,7 @@ def employeeHoliday(request):
                  } )
     return redirect('employeeLogin')
 
-#View Employee Leave and Aply(Employee)
+#View Employee Leave and Aply page(Employee)
 def employeeLeave(request):
     if isEmployeeLogedIn():
         return render(request, 'employee_leave.html',
@@ -334,6 +334,20 @@ def salaryRegistration(request):
     return redirect('adminLogin')
     
 
+
+
+ #Holiday Registration(Admin)
+def holidayRegistration(request):
+    if request.method=="POST":
+        try:
+            holiday=Holiday.objects.create(name=request.POST.get('name'), date=request.POST.get('date'),day=request.POST.get('day') )
+            return redirect('holidayRegistration')
+        except Exception as e:
+            return HttpResponse(e)
+    if isAdminLogedIn():
+        return render(request, 'holiday_registration.html', {'employees':Employee.objects.exclude(id__in=Holiday.objects.all().values_list('id', flat=True))})
+    return redirect('adminLogin')  
+
 #Employee Leave Registration(Employee)
 def employeeLeaveRegistration(request):
     if request.method=="POST":
@@ -353,19 +367,7 @@ def employeeLeaveRegistration(request):
             return HttpResponse(e)
     if isEmployeeLogedIn():
         return render(request, 'employee_leave_registration.html', {'employees':Employee.objects.exclude(id__in=EmployeeLeave.objects.all().values_list('id', flat=True))})
-    return redirect('employeeLogin')
-
- #Holiday Registration(Admin)
-def holidayRegistration(request):
-    if request.method=="POST":
-        try:
-            holiday=Holiday.objects.create(name=request.POST.get('name'), date=request.POST.get('date'),day=request.POST.get('day') )
-            return redirect('holidayRegistration')
-        except Exception as e:
-            return HttpResponse(e)
-    if isAdminLogedIn():
-        return render(request, 'holiday_registration.html', {'employees':Employee.objects.exclude(id__in=Holiday.objects.all().values_list('id', flat=True))})
-    return redirect('adminLogin')    
+    return redirect('employeeLogin')  
                     
 #Generating unique leave Id(Automation)                             
 def getLeaveCount():
@@ -443,7 +445,7 @@ def leaveAllowence():
         for leave in leaves:
             doj=EmployeeWorkDetails.objects.get(id=leave.emp_id).date_of_joining
             leave.total_paid_leaves=1+int(countMonth(doj))
-            leave.paid_leave_balance=(leave.total_paid_leaves)-(leave.used_paid_leaves)
+            leave.paid_leave_balance=(leave.total_paid_leaves)-(leave.used_paid_leaves)-(leave.encashment_leave)-(leave.total_casual_leaves)
             leave.save()
     except Exception as e:
         print(e)
@@ -471,9 +473,12 @@ def updateLeave(empId):
     try:
         employee=Employee.objects.get(id=empId)
         leave=Leave.objects.get(emp_id=employee)
-        eleaves=EmployeeLeave.objects.filter(emp_id=employee, is_aproved=True)
+        eleaves=EmployeeLeave.objects.filter(emp_id=employee,type='paid', is_aproved=True)
         cnt = sum(o.number_of_days for o in eleaves)
         leave.used_paid_leaves=cnt
+        eleaves=EmployeeLeave.objects.filter(emp_id=employee,type='casual', is_aproved=True)
+        cnt = sum(o.number_of_days for o in eleaves)
+        leave.total_casual_leaves=cnt
         leave.paid_leave_balance=leave.total_paid_leaves-cnt
         leave.save()
         leaveAllowence()
@@ -483,8 +488,10 @@ def updateLeave(empId):
 #View All Employee Leave(Admin)
 def viewAllLeave(request):
     try:
-        leaves= EmployeeLeave.objects.all()
-        return render(request, 'view_leave.html', {'employee_leaves':leaves})
+        if isAdminLogedIn():
+            leaves= EmployeeLeave.objects.all()
+            return render(request, 'view_leave.html', {'employee_leaves':leaves})
+        return redirect('adminLogin')
     except Exception as e:
         return HttpResponse('error')
 
@@ -693,3 +700,7 @@ def resetEmpPasswordByEmployee(request):
     except Exception as e:
         print(e)
         return HttpResponse("Internal Server Error")  
+
+
+def leaveBlanace():
+    pass

@@ -46,6 +46,12 @@ class AdminLoginAdmin(admin.ModelAdmin):
 class OtpAuthAdmin(admin.ModelAdmin):
     list_display=('emp_id','otp','time','status')
     
+class EmpPSlipAdmin(admin.ModelAdmin):
+    list_display=('slip_num','emp_id','month','year','basic','hra','travel_allowence','medical_allowence','other_allowence','arrears','leave_encashment','bonus','provident_fund','esic','professional_tax','other_charges','tds','advances','total_deduction','total_earning','net_pay','issued_date','status','created_by')
+
+
+
+
 #admin.site.register( , )    
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(EmployeeEducationDetails, EmpEduDetAdmin)
@@ -62,4 +68,4 @@ admin.site.register(EmployeeLogin, EmpLoginAdmin)
 admin.site.register(Admins, AdminsAdmin)
 admin.site.register(AdminLogin, AdminLoginAdmin)
 admin.site.register(OtpAuthentication,OtpAuthAdmin)
-admin.site.register(EmployeePSlip)
+admin.site.register(EmployeePSlip,EmpPSlipAdmin)

@@ -217,7 +217,8 @@ class AdminLogin(models.Model):
         return self.admin_id.emp_id.name
     class Meta:
         db_table = "admin_login"
-        
+   
+#Employee otp verification     
 class OtpAuthentication(models.Model):
     emp_id=models.ForeignKey(Employee, on_delete=models.CASCADE)
     time=models.TimeField(auto_now=True)
@@ -227,7 +228,8 @@ class OtpAuthentication(models.Model):
         return str(self.emp_id.name)
     class Meta:
         db_table="otpauthentication"
-        
+  
+#Employee pay slip model      
 class EmployeePSlip(models.Model):
     slip_num = models.IntegerField(default=0)
     emp_id=models.ForeignKey(Employee,on_delete=models.CASCADE)
@@ -257,3 +259,4 @@ class EmployeePSlip(models.Model):
         return str(self.emp_id.name)
     class Meta:
         db_table="employee_pay_slip"
+

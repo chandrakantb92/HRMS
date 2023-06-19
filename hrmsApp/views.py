@@ -618,6 +618,7 @@ def sendMailOtp(otp,reicever_email):
         subject = 'Test email'
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email=[reicever_email]
+        to_email=['Chandrakant.b@sankeysolutions.com']
         msg = EmailMultiAlternatives(
             subject, text ,from_email, to_email)
         msg.attach_alternative(text,"text/html")
@@ -629,14 +630,15 @@ def sendMailOtp(otp,reicever_email):
         print(e)
         return False
  
- 
+"""Get employee by their username """
 def getEmployeeByIdOrUsername(username):
     try:
         username = username
         return Employee.objects.get(username=username).id
     except Exception as e:
         return False
-    
+
+"""When employee forget password"""  
 def forgetPassword(request):
     if request.method=="POST": 
         try:
@@ -654,7 +656,7 @@ def forgetPassword(request):
             return HttpResponse(e)
     return render(request, 'employee_send_otp.html',{'error':''})
     
-    
+"""Verify OTP (Employee->System)"""  
 def verifyOTP(request):
     if request.method=="POST":
         try:
@@ -670,6 +672,7 @@ def verifyOTP(request):
             return HttpResponse(e)
     return render(request, 'otp_verification.html')
 
+"""Reset employee Password (Employee)"""
 def resetEmpPasswordByEmployee(request):
     try:
         if auth:= OtpAuthentication.objects.all().first():

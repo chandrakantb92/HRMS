@@ -59,6 +59,7 @@ urlpatterns = [
     path('forgetPassword/',  forgetPassword, name='forgetPassword'),
     path('verifyOTP/',  verifyOTP, name='verifyOTP'),
     path('updateEmployeePersonal/', updateEmployeePersonal, name='updateEmployeePersonal'),
+    path('updateEmployeeEducational/', updateEmployeeEducational, name='updateEmployeeEducational'),
     
     
     

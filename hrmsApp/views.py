@@ -750,3 +750,24 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
         employee = Employee.objects.get(id= emp_id)
         return render(request, 'update_employee_personal.html',{'employee':employee})
     return redirect('employeeLogin')   
+
+# Update employee Educational Details
+def updateEmployeeEducational(request):  # sourcery skip: extract-method
+    if request.method=="POST":
+        try:
+            educational = EmployeeEducationDetails.objects.get(id=Employee.objects.get(id=request.POST.get('emp_id')))
+            educational.ssc_school_name = request.POST.get('ssc_school_name') if educational.ssc_school_name!=request.POST.get('ssc_school_name') else educational.ssc_school_name
+            educational.save()
+            if isEmployeeLogedIn():
+                return redirect('employeeProfile')
+            if isAdminLogedIn():
+                return redirect('adminHome')
+            return HttpResponse("Who are you")
+        except Exception as e:
+          print(e)
+    if isEmployeeLogedIn() or isAdminLogedIn():
+        emp_id=request.GET.get('emp_id')
+        employee = Employee.objects.get(id= emp_id)
+        educational = EmployeeEducationDetails.objects.get(id=employee)
+        return render(request, 'update_employee_educational.html',{'educational':educational})
+    return redirect('employeeLogin')   

@@ -1,4 +1,5 @@
 #Libraries
+import json
 from pickle import EMPTY_DICT
 import random
 from django.http import HttpResponse, JsonResponse
@@ -723,12 +724,29 @@ def resetEmpPasswordByEmployee(request):
 Comment = """ Update Employee Information """
 
 # Update Employee basic informattion
-def updateEmployeePersonal(request):
+def updateEmployeePersonal(request):  # sourcery skip: extract-method
     if request.method=="POST":
         try:
-            emp_id=request.POST['id']
+            employee = Employee.objects.get(id=request.POST.get('emp_id'))
+            employee.name = request.POST.get('name') if employee.name!=request.POST.get('name') else employee.name
+            employee.contact = request.POST.get('contact') if employee.contact!=request.POST.get('contact') else employee.contact
+            employee.alternative_contact = request.POST.get('alternative_contact') if employee.alternative_contact!=request.POST.get('alternative_contact') else employee.alternative_contact
+            employee.blood_group = request.POST.get('blood_group') if employee.blood_group!=request.POST.get('blood_group') else employee.blood_group
+            employee.personal_email = request.POST.get('personal_email') if employee.personal_email!=request.POST.get('personal_email') else employee.personal_email
+            employee.date_of_birth = request.POST.get('date_of_birth') if employee.date_of_birth!=request.POST.get('date_of_birth') else employee.date_of_birth
+            employee.current_address = request.POST.get('current_address') if employee.current_address!=request.POST.get('current_address') else employee.current_address
+            employee.permanent_address = request.POST.get('permanent_address') if employee.permanent_address!=request.POST.get('permanent_address') else employee.permanent_address
+            employee.password = hash_password(request.POST.get('password')) if employee.password!=hash_password(request.POST.get('password')) else employee.password
+            employee.save()
+            if isEmployeeLogedIn():
+                return redirect('employeeProfile')
+            if isAdminLogedIn():
+                return redirect('adminHome')
+            return HttpResponse("Who are you")
         except Exception as e:
-            print(e)
-    if isEmployeeLogedIn():
-        return render(request, 'update_employee_basic.html',{})
+          print(e)
+    if isEmployeeLogedIn() or isAdminLogedIn():
+        emp_id=request.GET.get('emp_id')
+        employee = Employee.objects.get(id= emp_id)
+        return render(request, 'update_employee_personal.html',{'employee':employee})
     return redirect('employeeLogin')   

@@ -31,6 +31,9 @@
                 padding:5px;
                 border-radius:5px;
               }
+              #title{
+                padding-left:20px;
+              }
               .update-btn {
                 background-color: transparent;
                 border: none;
@@ -42,6 +45,12 @@
               
               .update-btn:hover {
                 opacity: 1;
+                color:black;
+              }
+              .title-log{
+                display:flex;
+                justify-content:space-between;
+                padding:10px 10px 0 10px;
               }
               
         </style>
@@ -89,10 +98,16 @@
                 {% comment %} content {% endcomment %}
 
                 <div>
-                    <h2>Employee Details</h2>
+                    <h2 id="title">Employee Details</h2>
                   </div>
                   <div class="details">
-                    <h3>Personal Information <button class = "update-btn" > <a href="{% url 'updateEmployeePersonal' %}">Update </a></button></h3>
+                    <h3 class="title-log">Personal Information 
+                      <form method="get" action="{% url 'updateEmployeePersonal' %}">
+                        {% csrf_token %}
+                        <input type="number" style="display:none;" id="emp_id" name="emp_id" value="{{user.id}}"">
+                        <input class = "update-btn"  type="submit" value="Update"/>
+                    </form>
+                    </h3>
                     <ul>
                       <li><strong>Employee Id :</strong>{{user.id}}</li>
                       <li><strong>Name:</strong>{{user.name}}</li>

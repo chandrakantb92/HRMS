@@ -14,6 +14,7 @@
           <div class="col-md-10">
             <div class="card">
               <h3> <div class="card-header">Employee Education Details</div> </h3>
+              <div style="color:red;display:flex;justify-content:center">{{ error }} </div>
               <div class="card-body">
                 <form method="POST" action="{% url 'employeeEducationRegistration' %}">
                     {% csrf_token %}

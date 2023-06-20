@@ -179,29 +179,32 @@ def employeeRegistration(request):
 def employeeEducationRegistration(request):
     if request.method=="POST":
         try:
-            employee=Employee.objects.get(id=request.POST.get('id'))
-            education=EmployeeEducationDetails(id=employee,
-            ssc_school_name=request.POST.get('ssc_school_name'),
-            ssc_passout_year=request.POST.get('ssc_passout_year'),
-            ssc_percentage=request.POST.get('ssc_percentage'),
-            hsc_college_name=request.POST.get('hsc_college_name'),
-            hsc_passout_year=request.POST.get('hsc_passout_year'),
-            hsc_stream=request.POST.get('hsc_stream'),
-            hsc_percentage=request.POST.get('hsc_percentage'),
-            ug_college_name=request.POST.get('ug_college_name'),
-            ug_passout_year=request.POST.get('ug_passout_year'),
-            ug_stream=request.POST.get('ug_stream'),
-            ug_specialization=request.POST.get('ug_specialization'),
-            ug_percentage=request.POST.get('ug_percentage'),
-            pg_college_name=request.POST.get('pg_college_name'),
-            pg_passout_year=request.POST.get('pg_passout_year'),
-            pg_stream=request.POST.get('pg_stream'),
-            pg_specialization=request.POST.get('pg_specialization'),
-            pg_percentage=request.POST.get('pg_percentage'),
-            education_gap=request.POST.get('education_gap'),
-            gap_reason=request.POST.get('gap_reason') )
-            education.save()
-            return redirect('employeeWorkExperienceRegistration')
+            emp_id=request.POST.get('id')
+            if emp_id is not None:
+                employee = Employee.objects.get(id = emp_id) 
+                education=EmployeeEducationDetails(id=employee,
+                ssc_school_name=request.POST.get('ssc_school_name'),
+                ssc_passout_year=request.POST.get('ssc_passout_year'),
+                ssc_percentage=request.POST.get('ssc_percentage'),
+                hsc_college_name=request.POST.get('hsc_college_name'),
+                hsc_passout_year=request.POST.get('hsc_passout_year'),
+                hsc_stream=request.POST.get('hsc_stream'),
+                hsc_percentage=request.POST.get('hsc_percentage'),
+                ug_college_name=request.POST.get('ug_college_name'),
+                ug_passout_year=request.POST.get('ug_passout_year'),
+                ug_stream=request.POST.get('ug_stream'),
+                ug_specialization=request.POST.get('ug_specialization'),
+                ug_percentage=request.POST.get('ug_percentage'),
+                pg_college_name=request.POST.get('pg_college_name'),
+                pg_passout_year=request.POST.get('pg_passout_year'),
+                pg_stream=request.POST.get('pg_stream'),
+                pg_specialization=request.POST.get('pg_specialization'),
+                pg_percentage=request.POST.get('pg_percentage'),
+                education_gap=request.POST.get('education_gap'),
+                gap_reason=request.POST.get('gap_reason') )
+                education.save()
+                return redirect('employeeWorkExperienceRegistration')
+            return render(request, 'employee_education_registration.html', {'error':'Invalid request'})
         except Exception as e:
             return HttpResponse(e)
     if isAdminLogedIn():

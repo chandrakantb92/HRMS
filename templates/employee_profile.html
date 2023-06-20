@@ -197,7 +197,13 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Official  Details <button class = "update-btn" > <a href="#">Update </a></button></h3>
+                    <h3 class="title-log">Official Details 
+                      <form method="get" action="{% url 'updateEmployeeOfficial' %}">
+                        {% csrf_token %}
+                        <input type="number" style="display:none;" id="emp_id" name="emp_id" value="{{user.id}}">
+                        <input class = "update-btn"  type="submit" value="Update"/>
+                    </form>
+                    </h3>
                     <ul>
                         <h4>Bank Details</h4>
                         <li><strong>Official Name:</strong>{{empofficialdetail.official_name}}</li>

@@ -748,10 +748,13 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
             return HttpResponse("Who are you")
         except Exception as e:
           print(e)
-    if isEmployeeLogedIn() or isAdminLogedIn():
-        emp_id=request.GET.get('emp_id')
-        employee = Employee.objects.get(id= emp_id)
-        return render(request, 'update_employee_personal.html',{'employee':employee})
+    emp_id=int(request.GET.get('emp_id'))
+    if isEmployeeLogedIn():
+        if emp_id != logedUserId():
+            return JsonResponse({'status':401, 'message':'unauthorized access'})
+        return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})   
+    if isAdminLogedIn():
+        return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})
     return redirect('employeeLogin')   
 
 # Update employee Educational Details
@@ -790,20 +793,48 @@ def updateEmployeeEducational(request):  # sourcery skip: extract-method, low-co
             return JsonResponse({'status':400, 'message':'Invalid request body'})
         except Exception as e:
           print(e)
+    emp_id=int(request.GET.get('emp_id'))
     if isEmployeeLogedIn():
-        emp_id=int(request.GET.get('emp_id'))
         if emp_id != logedUserId():
-            print(f'emp_id:{type(emp_id)}, loged id:{type(logedUserId())}')
             return JsonResponse({'status':401, 'message':'unauthorized access'})
-        return _extracted_from_updateEmployeeEducational_19(emp_id, request)
+        return render(request, 'update_employee_educational.html',{'educational':EmployeeEducationDetails.objects.get(id=(Employee.objects.get(id= emp_id)))})   
     if isAdminLogedIn():
-        emp_id=request.GET.get('emp_id')
-        return _extracted_from_updateEmployeeEducational_19(emp_id, request)
+        return render(request, 'update_employee_educational.html',{'educational':EmployeeEducationDetails.objects.get(id=(Employee.objects.get(id= emp_id)))})
     return redirect('employeeLogin')   
 
 
-# TODO Rename this here and in `updateEmployeeEducational`
-def _extracted_from_updateEmployeeEducational_19(emp_id, request):
-    employee = Employee.objects.get(id= emp_id)
-    educational = EmployeeEducationDetails.objects.get(id=employee)
-    return render(request, 'update_employee_educational.html',{'educational':educational})   
+#Update Employee Official Details
+def updateEmployeeOfficial(request): # sourcery skip: extract-method, last-if-guard
+    if request.method=="POST":
+        try:
+            emp_id=request.POST.get('emp_id')
+            print(emp_id)
+            if emp_id is not None:
+                employee = Employee.objects.get(id=emp_id)
+                official = EmployeeOfficialDetails.objects.get(id=employee)
+                official.official_name = request.POST.get('official_name') if official.official_name!=request.POST.get('official_name') else official.official_name
+                official.bank_name = request.POST.get('bank_name') if official.bank_name!=request.POST.get('bank_name') else official.bank_name
+                official.bank_ifsc = request.POST.get('bank_ifsc') if official.bank_ifsc!=request.POST.get('bank_ifsc') else official.bank_ifsc
+                official.bank_acount_number = request.POST.get('bank_acount_number') if official.bank_acount_number!=request.POST.get('bank_acount_number') else official.official_name
+                official.aadhaar = request.POST.get('aadhaar') if official.aadhaar!=request.POST.get('aadhaar') else official.aadhaar
+                official.pan = request.POST.get('pan') if official.pan!=request.POST.get('pan') else official.pan
+                official.universal_acount_number = request.POST.get('universal_acount_number') if official.universal_acount_number!=request.POST.get('universal_acount_number') else official.universal_acount_number
+                official.esic_number = request.POST.get('esic_number') if official.esic_number!=request.POST.get('esic_number') else official.esic_number
+                official.save()
+                if isEmployeeLogedIn():
+                    return redirect('employeeProfile')
+                if isAdminLogedIn():
+                    return redirect('adminHome')
+                return HttpResponse("Who are you")
+            return JsonResponse({'status':400, 'message':'Invalid request body'})
+        except Exception as e:
+          print(e)
+          return JsonResponse({'status':500, 'message':'Internal server error'})
+    emp_id=int(request.GET.get('emp_id'))
+    if isAdminLogedIn():
+        return render(request, 'update_employee_official.html',{'official':EmployeeOfficialDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isAdminLogedIn':True})
+    if isEmployeeLogedIn():
+        if emp_id != logedUserId():
+            return JsonResponse({'status':401, 'message':'unauthorized access'})
+        return render(request, 'update_employee_official.html',{'official':EmployeeOfficialDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isEmployeeLogedIn':True})   
+    return redirect('employeeLogin') 

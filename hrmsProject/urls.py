@@ -60,7 +60,7 @@ urlpatterns = [
     path('verifyOTP/',  verifyOTP, name='verifyOTP'),
     path('updateEmployeePersonal/', updateEmployeePersonal, name='updateEmployeePersonal'),
     path('updateEmployeeEducational/', updateEmployeeEducational, name='updateEmployeeEducational'),
-    
+    path('updateEmployeeOfficial/', updateEmployeeOfficial, name='updateEmployeeOfficial'),
     
     
     

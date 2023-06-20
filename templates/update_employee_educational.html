@@ -24,17 +24,149 @@
               <form method="post" action="{% url 'updateEmployeeEducational' %}">
                 {% csrf_token %}
                 <input id="emp_id" type="number" class="form-control" name="emp_id" style="display:none;" value={{educational.id}}>
-                  <div class="form-group row">
-                    <label for="ssc_school_name" class="col-md-4 col-form-label text-md-right">SSC School Name </label>
+                
+                <div style="padding-left:12%;"><h4>SSC Details</h4></div>  
+                <div class="form-group row">
+                    <label for="ssc_school_name" class="col-md-4 col-form-label text-md-right">School Name </label>
                   <div class="col-md-6">
                       <input id="ssc_school_name" type="text" class="form-control" name="ssc_school_name"  autocomplete="off" required value="{{educational.ssc_school_name}}">
                   </div>
                 </div>
 
+                <div class="form-group row">
+                    <label for="ssc_passout_year" class="col-md-4 col-form-label text-md-right">Pass Out Year</label>
+                  <div class="col-md-6">
+                      <input id="ssc_passout_year" type="text" class="form-control" name="ssc_passout_year"  autocomplete="off" required value="{{educational.ssc_passout_year}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ssc_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                  <div class="col-md-6">
+                      <input id="ssc_percentage" type="text" class="form-control" name="ssc_percentage"  autocomplete="off" required value="{{educational.ssc_percentage}}">
+                  </div>
+                </div>
+
+                <div style="padding-left:12%;"><h4>HSC/Diploma Details</h4></div>
+                <div class="form-group row">
+                    <label for="hsc_college_name" class="col-md-4 col-form-label text-md-right">College Name </label>
+                  <div class="col-md-6">
+                      <input id="hsc_college_name" type="text" class="form-control" name="hsc_college_name"  autocomplete="off" required value="{{educational.hsc_college_name}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="hsc_passout_year" class="col-md-4 col-form-label text-md-right">Pass Out Year</label>
+                  <div class="col-md-6">
+                      <input id="hsc_passout_year" type="text" class="form-control" name="hsc_passout_year"  autocomplete="off" required value="{{educational.hsc_passout_year}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="hsc_stream" class="col-md-4 col-form-label text-md-right">Stream</label>
+                  <div class="col-md-6">
+                      <input id="hsc_stream" type="text" class="form-control" name="hsc_stream"  autocomplete="off" required value="{{educational.hsc_stream}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="hsc_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                  <div class="col-md-6">
+                      <input id="hsc_percentage" type="text" class="form-control" name="hsc_percentage"  autocomplete="off" required value="{{educational.hsc_percentage}}">
+                  </div>
+                </div>
+
+                <div style="padding-left:12%;"><h4>Under Graduation Details</h4></div>
+                <div class="form-group row">
+                    <label for="ug_college_name" class="col-md-4 col-form-label text-md-right">College Name </label>
+                  <div class="col-md-6">
+                      <input id="ug_college_name" type="text" class="form-control" name="ug_college_name"  autocomplete="off" required value="{{educational.ug_college_name}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ug_passout_year" class="col-md-4 col-form-label text-md-right"> Pass Out Year</label>
+                  <div class="col-md-6">
+                      <input id="ug_passout_year" type="text" class="form-control" name="ug_passout_year"  autocomplete="off" required value="{{educational.ug_passout_year}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ug_stream" class="col-md-4 col-form-label text-md-right">Stream </label>
+                  <div class="col-md-6">
+                      <input id="ug_stream" type="text" class="form-control" name="ug_stream"  autocomplete="off" required value="{{educational.ug_stream}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ug_specialization" class="col-md-4 col-form-label text-md-right">Specialization</label>
+                  <div class="col-md-6">
+                      <input id="ug_specialization" type="text" class="form-control" name="ug_specialization"  autocomplete="off" required value="{{educational.ug_specialization}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="ug_percentage" class="col-md-4 col-form-label text-md-right">Percentage</label>
+                  <div class="col-md-6">
+                      <input id="ug_percentage" type="text" class="form-control" name="ug_percentage"  autocomplete="off" required value="{{educational.ug_percentage}}">
+                  </div>
+                </div>
+
+                <div style="padding-left:12%;"><h4>Post Graduation Details</h4></div>
+                <div class="form-group row">
+                    <label for="pg_college_name" class="col-md-4 col-form-label text-md-right">College Name </label>
+                  <div class="col-md-6">
+                      <input id="pg_college_name" type="text" class="form-control" name="pg_college_name"  autocomplete="off" required value="{{educational.pg_college_name}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pg_passout_year" class="col-md-4 col-form-label text-md-right">Pass Out Year </label>
+                  <div class="col-md-6">
+                      <input id="pg_passout_year" type="text" class="form-control" name="pg_passout_year"  autocomplete="off" required value="{{educational.pg_passout_year}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pg_stream" class="col-md-4 col-form-label text-md-right">Stream</label>
+                  <div class="col-md-6">
+                      <input id="pg_stream" type="text" class="form-control" name="pg_stream"  autocomplete="off" required value="{{educational.pg_stream}}">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="pg_specialization" class="col-md-4 col-form-label text-md-right">Specialization</label>
+                  <div class="col-md-6">
+                      <input id="pg_specialization" type="text" class="form-control" name="pg_specialization"  autocomplete="off" required value="{{educational.pg_specialization}}">
+                  </div>
+
+                </div><div class="form-group row">
+                    <label for="ssc_school_name" class="col-md-4 col-form-label text-md-right">Percentage </label>
+                  <div class="col-md-6">
+                      <input id="pg_percentage" type="text" class="form-control" name="pg_percentage"  autocomplete="off" required value="{{educational.pg_percentage}}">
+                  </div>
+                </div>
+
+                <div style="padding-left:12%;"><h4>Education Gap Details</h4></div>
+                </div><div class="form-group row">
+                    <label for="education_gap" class="col-md-4 col-form-label text-md-right">Gap Year </label>
+                <div class="col-md-6">
+                    <input id="education_gap" type="text" class="form-control" name="education_gap"  autocomplete="off" required value="{{educational.education_gap}}">
+                </div>
+                
+            
+                </div><div class="form-group row">
+                    <label for="gap_reason" class="col-md-4 col-form-label text-md-right">Reason </label>
+                <div class="col-md-6">
+                    <input id="gap_reason" type="text" class="form-control" name="gap_reason"  autocomplete="off" required value="{{educational.gap_reason}}">
+                </div>
+            </div>
+
               <div class="form-group button">
                 <button type="reset" class="btn btn-secondary">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
+            </div>
               
 {% endblock %}
     </form>

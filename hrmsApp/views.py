@@ -755,22 +755,55 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
     return redirect('employeeLogin')   
 
 # Update employee Educational Details
-def updateEmployeeEducational(request):  # sourcery skip: extract-method
+def updateEmployeeEducational(request):  # sourcery skip: extract-method, low-code-quality
     if request.method=="POST":
         try:
-            educational = EmployeeEducationDetails.objects.get(id=Employee.objects.get(id=request.POST.get('emp_id')))
-            educational.ssc_school_name = request.POST.get('ssc_school_name') if educational.ssc_school_name!=request.POST.get('ssc_school_name') else educational.ssc_school_name
-            educational.save()
-            if isEmployeeLogedIn():
-                return redirect('employeeProfile')
-            if isAdminLogedIn():
-                return redirect('adminHome')
-            return HttpResponse("Who are you")
+            emp_id=request.POST.get('emp_id')
+            if emp_id is not None:
+                employee = Employee.objects.get(id=emp_id)
+                educational = EmployeeEducationDetails.objects.get(id=employee)
+                educational.ssc_school_name = request.POST.get('ssc_school_name') if educational.ssc_school_name!=request.POST.get('ssc_school_name') else educational.ssc_school_name
+                educational.ssc_passout_year = request.POST.get('ssc_passout_year') if educational.ssc_percentage!=request.POST.get('ssc_passout_year') else educational.ssc_passout_year
+                educational.ssc_percentage = request.POST.get('ssc_percentage') if educational.ssc_percentage!=request.POST.get('ssc_percentage') else educational.ssc_percentage
+                educational.hsc_college_name = request.POST.get('hsc_college_name') if educational.hsc_college_name!=request.POST.get('hsc_college_name') else educational.hsc_college_name
+                educational.hsc_passout_year = request.POST.get('hsc_passout_year') if educational.hsc_passout_year !=request.POST.get('hsc_passout_year') else educational.hsc_passout_year
+                educational.hsc_stream = request.POST.get('hsc_stream') if educational.hsc_stream!=request.POST.get('hsc_stream') else educational.hsc_stream
+                educational.hsc_percentage = request.POST.get('hsc_percentage') if educational.hsc_percentage!=request.POST.get('hsc_percentage') else educational.hsc_percentage
+                educational.ug_college_name = request.POST.get('ug_college_name') if educational.ug_college_name!=request.POST.get('ug_college_name') else educational.ug_college_name
+                educational.ug_passout_year = request.POST.get('ug_passout_year') if educational.ug_passout_year!=request.POST.get('ug_passout_year') else educational.ug_passout_year
+                educational.ug_stream = request.POST.get('ug_stream') if educational.ug_stream!=request.POST.get('ug_stream') else educational.ug_stream
+                educational.ug_specialization = request.POST.get('ug_specialization') if educational.ug_specialization!=request.POST.get('ug_specialization') else educational.ug_specialization
+                educational.ug_percentage = request.POST.get('ug_percentage') if educational.hsc_stream!=request.POST.get('ug_percentage') else educational.ug_percentage
+                educational.pg_college_name = request.POST.get('pg_college_name') if educational.pg_college_name!=request.POST.get('pg_college_name') else educational.pg_college_name
+                educational.pg_passout_year = request.POST.get('pg_passout_year') if educational.pg_passout_year!=request.POST.get('pg_passout_year') else educational.pg_passout_year
+                educational.pg_stream = request.POST.get('pg_stream') if educational.pg_stream!=request.POST.get('pg_stream') else educational.pg_stream
+                educational.pg_specialization = request.POST.get('pg_specialization') if educational.pg_specialization!=request.POST.get('pg_specialization') else educational.pg_specialization
+                educational.pg_percentage = request.POST.get('pg_percentage') if educational.pg_percentage!=request.POST.get('pg_percentage') else educational.pg_percentage
+                educational.education_gap = request.POST.get('education_gap') if educational.education_gap!=request.POST.get('education_gap') else educational.education_gap
+                educational.gap_reason = request.POST.get('gap_reason') if educational.gap_reason!=request.POST.get('gap_reason') else educational.gap_reason
+                educational.save()
+                if isEmployeeLogedIn():
+                    return redirect('employeeProfile')
+                if isAdminLogedIn():
+                    return redirect('adminHome')
+                return HttpResponse("Who are you")
+            return JsonResponse({'status':400, 'message':'Invalid request body'})
         except Exception as e:
           print(e)
-    if isEmployeeLogedIn() or isAdminLogedIn():
+    if isEmployeeLogedIn():
+        emp_id=int(request.GET.get('emp_id'))
+        if emp_id != logedUserId():
+            print(f'emp_id:{type(emp_id)}, loged id:{type(logedUserId())}')
+            return JsonResponse({'status':401, 'message':'unauthorized access'})
+        return _extracted_from_updateEmployeeEducational_19(emp_id, request)
+    if isAdminLogedIn():
         emp_id=request.GET.get('emp_id')
-        employee = Employee.objects.get(id= emp_id)
-        educational = EmployeeEducationDetails.objects.get(id=employee)
-        return render(request, 'update_employee_educational.html',{'educational':educational})
+        return _extracted_from_updateEmployeeEducational_19(emp_id, request)
     return redirect('employeeLogin')   
+
+
+# TODO Rename this here and in `updateEmployeeEducational`
+def _extracted_from_updateEmployeeEducational_19(emp_id, request):
+    employee = Employee.objects.get(id= emp_id)
+    educational = EmployeeEducationDetails.objects.get(id=employee)
+    return render(request, 'update_employee_educational.html',{'educational':educational})   

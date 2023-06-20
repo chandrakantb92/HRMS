@@ -105,14 +105,8 @@ def employeeLogin(request):  # sourcery skip: extract-method
 #Employee Home(Employee)
 def employeeHome(request):  # sourcery skip: avoid-builtin-shadow
     if isEmployeeLogedIn():
-        return render(request, 'employee_base.html',{'user':userObj(), 
-                                                'leave':Leave.objects.get(emp_id=userObj()), 
-                                                'empLeave':EmployeeLeave.objects.all().filter(emp_id=userObj()),
-                                                'holidays': Holiday.objects.filter(date__gte=date.today()),
-                                                'is_attendence':isAttendenceSaved,
-                                                'in_attendance':isInAttendenceSaved,
-                                                'out_attendance':isOutAttendenceSaved
-                                                 })
+        balanceLeave(userObj())
+        return render(request, 'employee_base.html',{'user':userObj(),'leave':Leave.objects.get(emp_id=userObj()),'empLeave':EmployeeLeave.objects.all().filter(emp_id=userObj()),'holidays': Holiday.objects.filter(date__gte=date.today()),'is_attendence':isAttendenceSaved,'in_attendance':isInAttendenceSaved,'out_attendance':isOutAttendenceSaved })
     return redirect('employeeLogin')
 
 #Employee Profile page view (Employee) 
@@ -140,6 +134,7 @@ def employeeHoliday(request):
 #View Employee Leave and Aply page(Employee)
 def employeeLeave(request):
     if isEmployeeLogedIn():
+        balanceLeave(userObj())
         return render(request, 'employee_leave.html',
                   {'user':userObj(),
                    'empLeave':EmployeeLeave.objects.all().filter(emp_id=logedUserId()),
@@ -258,6 +253,8 @@ def employeeWorkDetailsRegistration(request):  # sourcery skip: extract-method
 #Create View Function(System Automation)
 def createLeave(employee):
     try:
+        if leave:=Leave.objects.get(emp_id=employee):
+            leave.save()
         leave=Leave.objects.create(emp_id=employee)
         leave.save()
     except Exception as e:
@@ -445,7 +442,8 @@ def leaveAllowence():
         for leave in leaves:
             doj=EmployeeWorkDetails.objects.get(id=leave.emp_id).date_of_joining
             leave.total_paid_leaves=1+int(countMonth(doj))
-            leave.paid_leave_balance=(leave.total_paid_leaves)-(leave.used_paid_leaves)-(leave.encashment_leave)-(leave.total_casual_leaves)
+            leave.paid_leave_balance=(leave.total_paid_leaves)-(leave.used_paid_leaves)-(leave.encashment_leave)
+            leave.total_casual_leaves=1
             leave.save()
     except Exception as e:
         print(e)
@@ -482,9 +480,29 @@ def updateLeave(empId):
         leave.paid_leave_balance=leave.total_paid_leaves-cnt
         leave.save()
         leaveAllowence()
+        balanceLeave(employee)
     except Exception as e:
         print(e)
-
+        
+        
+"""balave leave count"""
+def balanceLeave(employee):
+    try:
+        leave = Leave.objects.get(emp_id = employee)
+        totalleave = leave.total_paid_leaves
+        empleaves = EmployeeLeave.objects.filter(emp_id=employee, leave_type ='paid', is_aproved = True)
+        cnt = sum(o.number_of_days for o in empleaves)
+        balance =totalleave- cnt-leave.encashment_leave
+        leave.paid_leave_balance = balance
+        leave.save() 
+        empleaves = EmployeeLeave.objects.filter(emp_id=employee, leave_type ='casual', is_aproved = True)
+        cnt = sum(o.number_of_days for o in empleaves)
+        leave.total_casual_leaves = cnt
+        leave.save()
+        
+    except Exception as e:
+        print(e)
+    
 #View All Employee Leave(Admin)
 def viewAllLeave(request):
     try:
@@ -702,5 +720,15 @@ def resetEmpPasswordByEmployee(request):
         return HttpResponse("Internal Server Error")  
 
 
-def leaveBlanace():
-    pass
+Comment = """ Update Employee Information """
+
+# Update Employee basic informattion
+def updateEmployeePersonal(request):
+    if request.method=="POST":
+        try:
+            emp_id=request.POST['id']
+        except Exception as e:
+            print(e)
+    if isEmployeeLogedIn():
+        return render(request, 'update_employee_basic.html',{})
+    return redirect('employeeLogin')   

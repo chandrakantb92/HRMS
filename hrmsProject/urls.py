@@ -58,6 +58,11 @@ urlpatterns = [
     path('resetEmpPasswordByEmployee/',  resetEmpPasswordByEmployee, name='resetEmpPasswordByEmployee'),
     path('forgetPassword/',  forgetPassword, name='forgetPassword'),
     path('verifyOTP/',  verifyOTP, name='verifyOTP'),
+    path('updateEmployeePersonal/', updateEmployeePersonal, name='updateEmployeePersonal'),
+    
+    
+    
+    
     #path('<path:not_found>', handler404),
     
     re_path(r'^.*/$', page_not_available, name='page_not_available'),

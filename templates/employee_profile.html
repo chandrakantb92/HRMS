@@ -27,8 +27,23 @@
                 padding:2rem;
               }
               h3{
-                background-color: rgb(153, 240, 150)
+                background-color: rgb(153, 240, 150);
+                padding:5px;
+                border-radius:5px;
               }
+              .update-btn {
+                background-color: transparent;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                font-size: 16px;
+                transition: opacity 0.3s ease;
+              }
+              
+              .update-btn:hover {
+                opacity: 1;
+              }
+              
         </style>
         
         
@@ -77,7 +92,7 @@
                     <h2>Employee Details</h2>
                   </div>
                   <div class="details">
-                    <h3>Personal Information</h3>
+                    <h3>Personal Information <button class = "update-btn" > <a href="{% url 'updateEmployeePersonal' %}">Update </a></button></h3>
                     <ul>
                       <li><strong>Employee Id :</strong>{{user.id}}</li>
                       <li><strong>Name:</strong>{{user.name}}</li>
@@ -96,7 +111,7 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Education Information</h3>
+                    <h3>Education Information <button class = "update-btn" > <a href="#">Update </a></button></h3>
                     <ul>
                         <li><strong><h4>SSC Details:</strong></h4></li>
                         <li><strong>School Name :</strong>{{empedudetails.ssc_school_name}}</li>
@@ -134,7 +149,7 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Work Experience Details</h3>
+                    <h3>Work Experience Details <button class = "update-btn" > <a href="#">Update </a></button></h3>
                     <ul>
                         <h4>Work Experience Details</h4>
                         <li><strong>Company Name :</strong>{{empworkexpdetails.company_name}}</li>
@@ -149,7 +164,7 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Work  Details</h3>
+                    <h3>Work  Details <button class = "update-btn" > <a href="#">Update </a></button></h3>
                     <ul>
                         <h4>Internship Details</h4>
                         <li><strong>Start Date :</strong>{{empworkdetails.internship_start_date}}</li>
@@ -161,7 +176,7 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Official  Details</h3>
+                    <h3>Official  Details <button class = "update-btn" > <a href="#">Update </a></button></h3>
                     <ul>
                         <h4>Bank Details</h4>
                         <li><strong>Official Name:</strong>{{empofficialdetail.official_name}}</li>
@@ -177,7 +192,7 @@
                   </div>
                 
                   <div class="details">
-                    <h3>Package  Details</h3>
+                    <h3>Package  Details <button class = "update-btn" > <a href="#">Update </a></button></h3>
                     <ul>
                         <h4>Bank Details</h4>
                         <li><strong>Total package as in offer letter :</strong>{{pcgdetail.package}}</li>
@@ -196,7 +211,6 @@
                     </ul>
                   </div>
                 {% comment %} end {% endcomment %}
-
 
         </div>         
     </body>

@@ -607,8 +607,8 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code
             employee = Employee.objects.get(id=emp_id)
             if slip := getSlip(employee,month,year):
                 data = generateSlipData(slip)
-                send_slip_email(data)
-                return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Success"})
+                send_slip_email(data['email'], data['data'])
+                return redirect('employeePaySlip')
             return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':f'Data not found for {month}-{year}'})
             
         except Exception as e:

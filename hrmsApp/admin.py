@@ -47,7 +47,7 @@ class OtpAuthAdmin(admin.ModelAdmin):
     list_display=('emp_id','otp','time','status')
     
 class EmpPSlipAdmin(admin.ModelAdmin):
-    list_display=('slip_num','emp_id','month','year','basic','hra','travel_allowence','medical_allowence','other_allowence','arrears','leave_encashment','bonus','provident_fund','esic','professional_tax','other_charges','tds','advances','total_deduction','total_earning','net_pay','issued_date','status','created_by')
+    list_display=('slip_num','emp_id','month','year','paid_days','total_present_days','total_working_days','basic','hra','travel_allowence','medical_allowence','other_allowence','arrears','leave_encashment','bonus','provident_fund','esic','professional_tax','other_charges','tds','advances','total_deduction','total_earning','net_pay','issued_date','status','created_by')
 
 
 

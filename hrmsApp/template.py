@@ -103,7 +103,6 @@ OTP_AUTHENTICATOIN_MAIL_TEMPLATE = """
 """
 
 PAY_SLIP_TEMPLATE = """
-{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -203,40 +202,40 @@ PAY_SLIP_TEMPLATE = """
             <img src="{% static 'images/slogo.png' %}" style="display: block; height: 60px; border: 0; margin:auto;"> <br>
             <div>SANKEY  SOLUTIONS PVT. LTD</div>
             <div>602, Windsor Commerce Building,Baner Road, Baner, Pune Maharashtra 411045</div>
-            <div>Salary slip - {{slip.month}} {{slip.year}} </div>
+            <div>Salary slip : month - year </div>
         </div>
         <br>
         <div style="border: 1px solid black; margin: 2px;" class="table-border">
             <table style="margin-bottom:1%; width: 100%;" cellpadding='4' cellspacing='4'>
-                <tr>{{slip.}}
+                <tr>
                     <td class="bold-text">Employe Id:</td>
-                    <td>{{slip.emp_id}}</td>
+                    <td> emp_id </td>
                     <td class="bold-text">DOJ:</td>
-                    <td>{{slip.sankey_date_of_joining}}</th>
+                    <td> sankey_date_of_joining </th>
                 </tr>
                 <tr >
                     <td class="bold-text">Employee Name:</td>
-                    <td>{{slip.emp_name}}</td>
+                    <td> emp_name </td>
                     <td class="bold-text">UAN No:</td>
-                    <td>{{slip.uan_number}}</td>
+                    <td> uan_number </td>
                 </tr>
                 <tr>
                     <td class="bold-text">Designation:</td>
-                    <td>{{slip.employee_designation}}</td>
+                    <td> employee_designation </td>
                     <td class="bold-text">ESIC No:</td>
-                    <td>{{slip.pesic}}</td>
+                    <td> pesic </td>
                 </tr>
                 <tr>
                     <td class="bold-text">Total Present Days:</td>
-                    <td>{{slip.total_present_days}}</td>
+                    <td> total_present_days </td>
                     <td class="bold-text">Bank A/C No:</td>
-                    <td>{{slip.account_no}}</td>
+                    <td> account_no </td>
                 </tr>
                 <tr>
                     <td class="bold-text">Total Working Days:</td>
-                    <td>{{slip.total_working_days}}</td>
+                    <td> total_working_days </td>
                     <td class="bold-text">PAN No:</td>
-                    <td>{{slip.pancard}}</td>
+                    <td> pancard </td>
                 </tr>
             </table>
         </div>
@@ -252,77 +251,74 @@ PAY_SLIP_TEMPLATE = """
                 </tr> 
                 <tr>
                     <td class="table-border">Basic</td>
-                    <td class="table-border right">{{slip.basic_salary}}</td>
+                    <td class="table-border right"> basic_salary </td>
                     <td class="table-border">Provident Fund</td>
-                    <td class="table-border right">{{slip.provident_fund}}</td>
+                    <td class="table-border right"> provident_fund </td>
                 </tr>
                 <tr>
                     <td class="table-border">HRA</td>
-                    <td class="table-border right">{{slip.hra_salary}}</td>
+                    <td class="table-border right"> hra_salary </td>
                     <td class="table-border">ESIC</td>
-                    <td class="table-border right">{{slip.mesic}}</td>
+                    <td class="table-border right">  mesic </td>
                 </tr>
                 <tr>
                     <td class="table-border">Travel Allowance</td>
-                    <td class="table-border right">{{slip.traveling_allowance}}</td>
+                    <td class="table-border right"> traveling_allowance </td>
                     <td class="table-border">Professional Tax</td>
-                    <td class="table-border right">{{slip.professional_tax}}</td>
+                    <td class="table-border right"> professional_tax </td>
                 </tr>
                 <tr>
                     <td class="table-border ">Medical Allowance</td>
-                    <td class="table-border right">{{slip.medical_allowance}}</td>
+                    <td class="table-border right"> medical_allowance </td>
                     <td class="table-border">Other Charges</td>
-                    <td class="table-border right">{{slip.other_charges}}</td>
+                    <td class="table-border right"> other_charges </td>
                 </tr>
                 <tr>
                     <td  class="table-border">Other Allowance</td>
-                    <td  class="table-border right">{{slip.other_allowance}}</td>
+                    <td  class="table-border right"> other_allowance </td>
                     <td  class="table-border">TDS</td>
-                    <td  class="table-border right">{{slip.tds}}</td>
+                    <td  class="table-border right"> tds </td>
                 </tr>
 
                 <tr>
                     <td  class="table-border">Arrears</td>
-                    <td  class="table-border right">{{slip.arrears}}</td>
+                    <td  class="table-border right"> arrears </td>
                     <td class="table-border">Advances</td>
-                    <td class="table-border right">{{slip.advance}}</td>
+                    <td class="table-border right"> advance </td>
                 </tr>
 
                 <tr class="">
                     <td  class="table-border">Leave Encashment</td>
-                    <td  class="table-border right">{{slip.leave_encashment}}</td>
+                    <td  class="table-border right"> leave_encashment </td>
                     <td  class="table-border"></td>
                     <td  class="table-border right"></td>
                 </tr>
                 <tr class="">
                     <td  class="table-border ">Bonus</td>
-                    <td  class="table-border right">{{slip.bonus}}</td>
+                    <td  class="table-border right"> bonus </td>
                     <td  class="table-border"></td>
                     <td  class="table-border right"></td>
                 </tr>
-                <tfoot>
+               
                 <tr>
                     <td  class="table-border"><b>Total Earnings RS.</b></td>
-                    <td   class="table-border right"><b>{{slip.gross_salary}}</b></td>
+                    <td   class="table-border right"><b> gross_salary </b></td>
 
                     <td   class="table-border"><b>Total Deductions RS.</b></td>
-                    <td   class="table-border right"><b>{{slip.total_deduction}}</b></td>
+                    <td   class="table-border right"><b> total_deduction </b></td>
                 </tr>
                 <tr>
-                    <td  ></td>
-                    <td  ></td>
-                    <td   class="table-border"><b>Net Pay:</b></td>
-                    <td   class="table-border right"><b>{{slip.salary_in_hand}}</b></td>
+                    <td></td>
+                    <td></td>
+                    <td class="table-border"><b>Net Pay:</b></td>
+                    <td   class="table-border right"><b> salary_in_hand </b></td>
                 </tr>
             </tfoot>
             </table>
         </div>
     </div>
-    <div class="print"> <button onclick="downloadPDF()">Print</button>
     </div>
   
 </body>
 </html> 
-
-
 """

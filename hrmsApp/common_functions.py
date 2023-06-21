@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from hrmsApp.models import*
+from hrmsApp import template
 
 """
 Function to calculate number of work days, salary amount, deduction
@@ -42,7 +43,10 @@ def calculatePaySlip(request,id):
     return render(request, 'slip.html',{'slip':slip})
 
 def generateSlipData(slip):
-    return True
+    employee=Employee.objects.get(id=(slip.emp_id.id))
+    email = employee.company_email
+    slip_template = template.PAY_SLIP_TEMPLATE
+    print("success")
                 
 def send_slip_email(data):
     return True

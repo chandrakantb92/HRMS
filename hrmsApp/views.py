@@ -15,6 +15,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from hrmsApp import template
+from django.db.models import F
 
 
 #Return id of loged in user(System Automation)
@@ -146,7 +147,10 @@ def employeeLeave(request):
 def adminRegistration(request):
     if request.method=="POST":
         try:
-            return admin_registrarion(request)
+            emp_id=request.POST.get('emp_id')
+            if emp_id is not None:
+                return admin_registrarion(request)
+            return render(request, 'admin_registration.html',{'error':'Limit Exceed' ,'employees':Employee.objects.exclude(id__in=Admins.objects.all().values_list('emp_id', flat=True))})
         except Exception as e:
             return HttpResponse(e)
     if isSuperAdminLogedIn():
@@ -521,7 +525,7 @@ def viewAllLeave(request):
 def viewAllEmployee(request):
     try:
         if isAdminLogedIn():
-            employees= Employee.objects.all()
+            employees = Employee.objects.all().order_by('id')
             return render(request, 'view_employee.html', {'employees':employees})
         return redirect('adminLogin')
     except Exception as e:
@@ -744,8 +748,8 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
             if isEmployeeLogedIn():
                 return redirect('employeeProfile')
             if isAdminLogedIn():
-                return redirect('adminHome')
-            return HttpResponse("Who are you")
+                return redirect('viewAllEmployee')
+            return HttpResponse("Who the hell are you")
         except Exception as e:
           print(e)
     emp_id=int(request.GET.get('emp_id'))
@@ -788,7 +792,7 @@ def updateEmployeeEducational(request):  # sourcery skip: extract-method, low-co
                 if isEmployeeLogedIn():
                     return redirect('employeeProfile')
                 if isAdminLogedIn():
-                    return redirect('adminHome')
+                    return redirect('viewAllEmployee')
                 return HttpResponse("Who are you")
             return JsonResponse({'status':400, 'message':'Invalid request body'})
         except Exception as e:
@@ -824,7 +828,7 @@ def updateEmployeeOfficial(request): # sourcery skip: extract-method, last-if-gu
                 if isEmployeeLogedIn():
                     return redirect('employeeProfile')
                 if isAdminLogedIn():
-                    return redirect('adminHome')
+                    return redirect('viewAllEmployee')
                 return HttpResponse("Who are you")
             return JsonResponse({'status':400, 'message':'Invalid request body'})
         except Exception as e:

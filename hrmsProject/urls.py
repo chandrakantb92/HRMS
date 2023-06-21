@@ -63,8 +63,5 @@ urlpatterns = [
     path('updateEmployeeOfficial/', updateEmployeeOfficial, name='updateEmployeeOfficial'),
     
     
-    
-    #path('<path:not_found>', handler404),
-    
     re_path(r'^.*/$', page_not_available, name='page_not_available'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

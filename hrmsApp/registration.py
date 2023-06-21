@@ -52,10 +52,13 @@ def _extracted_from_employee_registrarion_4(request):
     
  # TODO Rename this here and in `admin_registrarion` 
 def _extracted_from_admin_registrarion_4(request):
-    admin=Admins(emp_id=(Employee.objects.get(id=(request.POST.get('emp_id')))))
+    employee=Employee.objects.get(id=(request.POST.get('emp_id')))
+    admin=Admins(emp_id=employee)
     admin.admin_username=request.POST.get('admin_username')
     admin.password=hash_password(request.POST.get('confirm_password'))
     admin.role='admin'
+    employee.role='admin'
+    employee.save()
     admin.save()
 ###########################################################################################
 

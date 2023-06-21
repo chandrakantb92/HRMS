@@ -12,6 +12,7 @@
     {% block content %}
     <h1 style="display:flex; justify-content:center;">Admin Registration Form</h1>
     <form method="post" action="{% url 'adminRegistration' %}">
+      <div style="display:flex;justify-content:center;color:red;">{{error}}</div>
       {% csrf_token %}
       <div>
         <label for="emp_id">Select Employee:</label>

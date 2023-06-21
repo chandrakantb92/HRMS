@@ -63,7 +63,7 @@ def generateSlipData(slip_num):
         slip_template=slip_template.replace("total_deduction", str(slip.total_deduction))
         slip_template=slip_template.replace("salary_in_hand", str(slip.net_pay))
         print("Template converted successfully")
-        return {'template': slip_template, 'email': "Chandrakant.b@sankeysolutions.com"}
+        return {'template': slip_template, 'email': email}
     except Exception as e:
         print(e)
         return False

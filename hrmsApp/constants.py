@@ -10,7 +10,7 @@ MONTH_DICT=[
     {'8':'August'},
     {'9':'September'},
     {'10':'October'},
-    {'12':'November'},
+    {'11':'November'},
     {'12':'December'},
 ]
 

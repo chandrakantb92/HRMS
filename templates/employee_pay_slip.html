@@ -46,6 +46,9 @@
                 background-color: #f2f2f2;
                 border-radius: 5px;
             }
+            select{
+              height:30px;
+            }
             
             h1 {
                 text-align: center;
@@ -58,11 +61,9 @@
             
             button {
                 align-self: flex-end;
-                margin-top: 10px;
+            
             }
             
-           
-              
               @media screen and (max-width: 480px) {
                 .form-container {
                   max-width: 100%;
@@ -83,7 +84,7 @@
                     <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
                     <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
                     <li><a href="{% url 'attendanceSection' %}"><img class="icon" src="{% static 'images/attendance.png' %}" />Attendance Section</a></li>
-                    <li><a href="{% url 'employeePaySleep' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
+                    <li><a href="{% url 'employeePaySlip' %}"><img class="icon" src="{% static 'images/slip.png' %}" />Pay Slip</a></li>
                     <li><a href="#"><img class="icon" src="{% static 'images/employeehandbook.png' %}" />Employee Handbook</a></li>
                     <li><a href="#"><img class="icon" src="{% static 'images/reimbursement.png' %}" />Reimbursment</a></li>
                     <li><a href="#"><img class="icon" src="{% static 'images/medical.png' %}" />Medical Insurance</a></li>
@@ -113,8 +114,9 @@
             <div class="content-body">
               <div class="container2">
                 <h2>Select Month and year</h2>
-                <form method="post" action="{% url 'employeePaySleep' %}">
+                <form method="post" action="{% url 'employeePaySlip' %}">
                   {% csrf_token %}
+                  <input id="emp_id" type="number" class="form-control" name="emp_id" style="display:none;" value="{{user.id}}">
                   <label for="year">Year:</label>
                   <select id="year" name="year">
                     {% for year in years %}
@@ -122,7 +124,7 @@
                     {% endfor %}
                     <!-- Add more options as needed -->
                   </select>
-                
+                <br/>
                   <label for="month">Month:</label>
                   <select id="month" name="month">
                     {% for month in months %}
@@ -130,10 +132,11 @@
                     {% endfor %}
                     <!-- Add more options as needed -->
                   </select>
-                
+                  <p style="color:red">{{ error }}</p>
+                  <p style="color:green">{{ success }}</p>
                   <button type="submit">Submit</button>
                 </form>
-                <p style="color:red">{{ error }}</p>
+                
             </div>
             </div>
              {% comment %} Content End{% endcomment %}  

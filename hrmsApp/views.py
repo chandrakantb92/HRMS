@@ -17,6 +17,7 @@ from django.views.decorators.csrf import csrf_exempt
 from hrmsApp import template
 from django.db.models import F
 from django.contrib import admin
+from hrmsApp import constants
 
 #Return id of loged in user(System Automation)
 def logedUserId():
@@ -593,19 +594,37 @@ def attendanceSection(request):
         return HttpResponse(e)
 
 #Employee Pay slip view
-def employeePaySleep(request):
+def employeePaySlip(request):  # sourcery skip: extract-method, low-code
+    years=[2023,2022,2021,2020,2019]
+    months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
     if request.method=="POST":
         try:
-            return calculatePaySlip(request, logedUserId())
+            emp_id = int(request.POST.get('emp_id'))
+            month = request.POST.get('month')
+            year = request.POST.get('year')
+            if emp_id is  None or month is  None or  year is  None:
+                return JsonResponse({'status':400, 'message':" Bad Request "})
+            employee = Employee.objects.get(id=emp_id)
+            if slip := getSlip(employee,month,year):
+                # data = generateSlipData(slip)
+                # send_slip_email(data)
+                return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Success"})
+            return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':f'Data not found for {month}-{year}'})
+            
         except Exception as e:
             return HttpResponse(e)
     if isEmployeeLogedIn():
-        years={2023}
-        months={'January':1, 'February':2,'March':3, 'April':4, 'May':5, 'June':6, 'July':7, 'August':8, 'September':9, 'October':10, 'November':11,'December':12}
         return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':""})
     return HttpResponse("Bad Request!")
 
-    
+#
+def getSlip(employee,month,year):
+    try:
+        return EmployeePSlip.objects.get(Q(emp_id=employee),Q(month=month) & Q(year=year))  
+    except Exception as e:
+        print("Internal server error")
+        return False
+        
 
 #Check is logedin employee todays attendance record is present or not
 def isAttendenceSaved():
@@ -844,15 +863,27 @@ def updateEmployeeOfficial(request): # sourcery skip: extract-method, last-if-gu
     return redirect('employeeLogin') 
 
 #Update Employee Package Details
-def updateEmployeePackage(request):
+def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-quality
     if request.method=="POST":
         try:
             emp_id=request.POST.get('emp_id')
             print(emp_id)
             if emp_id is not None:
                 employee = Employee.objects.get(id=emp_id)
-                # official = EmployeeOfficialDetails.objects.get(id=employee)
-                # official.save()
+                package = EmployeePackageDetails.objects.get(id=employee)
+                package.package = request.POST.get('package') if package.package!=request.POST.get('package') else package.package
+                package.bonus = request.POST.get('bonus') if package.bonus!=request.POST.get('bonus') else package.bonus
+                package.in_hand_salary = request.POST.get('in_hand_salary') if package.in_hand_salary!=request.POST.get('in_hand_salary') else package.in_hand_salary
+                package.gross_salary = request.POST.get('gross_salary') if package.gross_salary!=request.POST.get('gross_salary') else package.gross_salary
+                package.basic_salary = request.POST.get('basic_salary') if package.basic_salary!=request.POST.get('basic_salary') else package.basic_salary
+                package.erf = request.POST.get('erf') if package.erf!=request.POST.get('erf') else package.erf
+                package.hra = request.POST.get('hra') if package.hra!=request.POST.get('hra') else package.hra
+                package.travell_allowance = request.POST.get('travell_allowance') if package.travell_allowance!=request.POST.get('travell_allowance') else package.travell_allowance
+                package.medical_allowance = request.POST.get('medical_allowance') if package.medical_allowance!=request.POST.get('medical_allowance') else package.medical_allowance  
+                package.other_allowance = request.POST.get('other_allowance') if package.other_allowance!=request.POST.get('other_allowance') else package.other_allowance
+                package.esic = request.POST.get('esic') if package.esic!=request.POST.get('esic') else package.esic
+                package.pt = request.POST.get('pt') if package.pt!=request.POST.get('pt') else package.pt
+                package.save()
                 return redirect('viewAllEmployee')
             return JsonResponse({'status':400, 'message':'Invalid request body'})
         except Exception as e:
@@ -860,5 +891,5 @@ def updateEmployeePackage(request):
           return JsonResponse({'status':500, 'message':'Internal server error'})
     emp_id=int(request.GET.get('emp_id'))
     if isAdminLogedIn():
-        return render(request, 'update_employee_package.html',{'official':EmployeeOfficialDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isAdminLogedIn':True})
+        return render(request, 'update_employee_package.html',{'package':EmployeePackageDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isAdminLogedIn':True})
     return redirect('adminLogin') 

@@ -16,7 +16,7 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from hrmsApp import template
 from django.db.models import F
-
+from django.contrib import admin
 
 #Return id of loged in user(System Automation)
 def logedUserId():
@@ -842,3 +842,23 @@ def updateEmployeeOfficial(request): # sourcery skip: extract-method, last-if-gu
             return JsonResponse({'status':401, 'message':'unauthorized access'})
         return render(request, 'update_employee_official.html',{'official':EmployeeOfficialDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isEmployeeLogedIn':True})   
     return redirect('employeeLogin') 
+
+#Update Employee Package Details
+def updateEmployeePackage(request):
+    if request.method=="POST":
+        try:
+            emp_id=request.POST.get('emp_id')
+            print(emp_id)
+            if emp_id is not None:
+                employee = Employee.objects.get(id=emp_id)
+                # official = EmployeeOfficialDetails.objects.get(id=employee)
+                # official.save()
+                return redirect('viewAllEmployee')
+            return JsonResponse({'status':400, 'message':'Invalid request body'})
+        except Exception as e:
+          print(e)
+          return JsonResponse({'status':500, 'message':'Internal server error'})
+    emp_id=int(request.GET.get('emp_id'))
+    if isAdminLogedIn():
+        return render(request, 'update_employee_package.html',{'official':EmployeeOfficialDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isAdminLogedIn':True})
+    return redirect('adminLogin') 

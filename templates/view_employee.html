@@ -74,6 +74,7 @@
         <th>Update Persoanl</th>
         <th>Update Educational</th>
         <th>Update Official</th>
+        <th>Update Package</th>
       </tr>
     </thead>
     <tbody>
@@ -109,6 +110,14 @@
             </td>
             <td>
               <form method="get" action="{% url 'updateEmployeeOfficial' %}">
+                {% csrf_token %}
+                <input type="number" style="display:none;" id="emp_id" name="emp_id" value="{{employee.id}}">
+                <input class = "update-btn"  type="submit" value="Update"/>
+              </form>
+            </td>
+
+            <td>
+              <form method="get" action="{% url 'updateEmployeePackage' %}">
                 {% csrf_token %}
                 <input type="number" style="display:none;" id="emp_id" name="emp_id" value="{{employee.id}}">
                 <input class = "update-btn"  type="submit" value="Update"/>

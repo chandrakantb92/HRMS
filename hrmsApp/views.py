@@ -595,8 +595,6 @@ def attendanceSection(request):
 
 #Employee Pay slip view
 def employeePaySlip(request):  # sourcery skip: extract-method, low-code
-    years=[2023,2022,2021,2020,2019]
-    months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
     if request.method=="POST":
         try:
             emp_id = int(request.POST.get('emp_id'))
@@ -605,17 +603,24 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code
             if emp_id is  None or month is  None or  year is  None:
                 return JsonResponse({'status':400, 'message':" Bad Request "})
             employee = Employee.objects.get(id=emp_id)
-            if slip := getSlip(employee,month,year):
-                data = generateSlipData(slip)
-                send_slip_email(data['email'], data['data'])
-                return redirect('employeePaySlip')
-            return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':f'Data not found for {month}-{year}'})
-            
+            slip = getSlip(employee,month,year)
+            print("slip converted")
+            data = generateSlipData(slip)
+            print("data extracted ")
+            pdf = render_to_pdf(data['template'])
+            print("pdf converted")
+            email = data['email']
+            send_slip_email(email,pdf)
+            print("Successfully mail done")
+            return redirect('employeePaySlip')
         except Exception as e:
             return HttpResponse(e)
     if isEmployeeLogedIn():
+        years=[2023,2022,2021,2020,2019]
+        months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
         return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':""})
-    return HttpResponse("Bad Request!")
+    else:
+        return HttpResponse("Bad Request!")
 
 #
 def getSlip(employee,month,year):

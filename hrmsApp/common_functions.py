@@ -6,61 +6,30 @@ from django.forms.models import model_to_dict
 from hrmsProject import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from xhtml2pdf import pisa
+from io import BytesIO
+from reportlab.lib import pdfencrypt
+import pdfkit
+import PyPDF2
+
+
 
 """
 Function to calculate number of work days, salary amount, deduction
 """
-def calculatePaySlip(request,id):
-    employee=Employee.objects.get(id=id)
-    
-    slip={
-        'month':request.POST.get('month') ,
-        'year': request.POST.get('year'),
-        'emp_id': employee.id,
-        'emp_name':employee.name ,
-        'employee_designation':employee.designation,
-        'paid_days': 24,
-        'total_present_days': 24,
-        'total_working_days': 31,
-        'sankey_date_of_joining': EmployeeWorkDetails.objects.get(id=employee).date_of_joining ,
-        'uan_number': EmployeeOfficialDetails.objects.get(id=employee).universal_acount_number ,
-        'pesic':  EmployeeOfficialDetails.objects.get(id=employee).esic_number ,
-        'account_no':EmployeeOfficialDetails.objects.get(id=employee).bank_acount_number ,
-        'pancard':EmployeeOfficialDetails.objects.get(id=employee).pan ,
-        'basic_salary':EmployeePackageDetails.objects.get(id=employee).basic_salary ,
-        'hra_salary':EmployeePackageDetails.objects.get(id=employee).hra ,
-        'traveling_allowance':EmployeePackageDetails.objects.get(id=employee).travell_allowance ,
-        'medical_allowance':EmployeePackageDetails.objects.get(id=employee).medical_allowance  ,
-        'other_allowance':EmployeePackageDetails.objects.get(id=employee).other_allowance  ,
-        'arrears':0 ,
-        'leave_encashment':0 ,
-        'bonus':0 ,
-        'provident_fund':Salary.objects.get(emp_id=employee).pf ,
-        'mesic':0 ,
-        'professional_tax':Salary.objects.get(emp_id=employee).professional_tax ,
-        'other_charges':Salary.objects.get(emp_id=employee).other_charges ,
-        'tds':Salary.objects.get(emp_id=employee).tds ,
-        'advance':0,
-        'gross_salary':EmployeePackageDetails.objects.get(id=employee).gross_salary  ,
-        'total_deduction':(EmployeePackageDetails.objects.get(id=employee).gross_salary )-(EmployeePackageDetails.objects.get(id=employee).in_hand_salary ),
-        'salary_in_hand':EmployeePackageDetails.objects.get(id=employee).in_hand_salary ,        
-    }
-    return render(request, 'slip.html',{'slip':slip})
 
 def generateSlipData(slip):
     try:
-        
+        """extracting dictionary from model object"""
         slip = model_to_dict(slip)
+        
+        """Extracting objects to be replace in template"""
         employee=Employee.objects.get(id=int(slip['emp_id']))
         official = EmployeeOfficialDetails.objects.get(id=employee)
         work = EmployeeWorkDetails.objects.get(id=employee)
         package = EmployeePackageDetails.objects.get(id=employee)
-        pesic =  EmployeeOfficialDetails.objects.get(id=employee).esic_number
-        
-        doj = work.date_of_joining
         email = employee.company_email
-        uan_number = official.universal_acount_number
-        account_no = official.bank_acount_number
         
         """Extracting and Replacing actual value into template"""
         slip_template = template.PAY_SLIP_TEMPLATE
@@ -96,23 +65,62 @@ def generateSlipData(slip):
         slip_template=slip_template.replace("gross_salary", str(package.gross_salary))
         slip_template=slip_template.replace("total_deduction", str(slip['total_deduction']))
         slip_template=slip_template.replace("salary_in_hand", str(slip['net_pay']))
-        return ({'data': slip_template, 'email': email})
+        html_content = render_to_string(template=slip_template, context={})
+        
+        print("template converted successfully")
+        return ({'template': html_content, 'email': email})
     except Exception as e:
         print(e)
-       
-def send_slip_email(email,template):
+        return False
+    
+def send_slip_email(email,pdf):
     try:
         text = template
-
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email=[email]
-        to_email=['Chandrakant.b@sankeysolutions.com']
         msg = EmailMultiAlternatives(
-            "slip", text ,from_email, to_email)
-        msg.attach_alternative(text,"text/html")
+            "Mpnthly Salary slip", text ,from_email, to_email)
+        msg.attach('attachment.pdf', pdf, 'application/pdf')
         msg.send()
         print("Mail sent successfully")
         return True
     except Exception as e:
         print(e)
         return False
+     
+     
+def render_to_pdf(employee_template: str):
+    try:
+        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        print("print 1")
+        # Define the input HTML string and the output PDF data
+        output_data = BytesIO()
+        # password = ""
+
+        # #Define the password that will be used to protect the PDF
+        # temp_password = dob.split("-")
+        # for var_char in temp_password:
+        #     password = password + var_char
+
+        # Use pdfkit to convert the HTML string to a PDF
+        pdf_data = pdfkit.from_string(employee_template, False, options={'quiet': ''}, configuration=config)
+        print("print 2")
+        # Open the PDF data as a stream and add password protection
+        pdf_reader = PyPDF2.PdfFileReader(BytesIO(pdf_data))
+        pdf_writer = PyPDF2.PdfFileWriter()
+        for page in range(pdf_reader.getNumPages()):
+            pdf_writer.addPage(pdf_reader.getPage(page))
+
+        pdf_writer.encrypt("212112")
+
+        # Write the password-protected PDF to a BytesIO object
+        pdf_writer.write(output_data)
+
+        # Get the PDF data as a string
+        print("return successfully")
+        return output_data.getvalue()
+    except Exception as e:
+        print(e)
+        
+
+       

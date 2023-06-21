@@ -40,3 +40,9 @@ def calculatePaySlip(request,id):
         'salary_in_hand':EmployeePackageDetails.objects.get(id=employee).in_hand_salary ,        
     }
     return render(request, 'slip.html',{'slip':slip})
+
+def generateSlipData(slip):
+    return True
+                
+def send_slip_email(data):
+    return True

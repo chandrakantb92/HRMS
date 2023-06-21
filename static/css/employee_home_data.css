@@ -1,6 +1,6 @@
 
 .leave-summary{
-  background-color: rgb(218, 213, 213);
+  background-color: #20dad8;
   height: 25vh;
   width:94%;
   display: flex;
@@ -13,16 +13,16 @@
 table {
   width: 90%;
   border-collapse: collapse;
-  background-color: rgb(248, 218, 218);
+  background-color:#20dad8;
   text-align:center;
 
 }
 
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid #120907;
 }
 th{
-  background-color: rgb(153, 240, 150);
+  background-color:#209ed8;
 }
 
 .padding{

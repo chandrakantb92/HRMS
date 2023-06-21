@@ -1,5 +1,5 @@
 header{
-  background-color: #85a2bd;
+  background-color: #146088;
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -33,9 +33,10 @@ body{
   padding: 5px 10px;
   border: none;
   background-color: #fff;
-  color: #333;
+  color: #146088;
   cursor: pointer;
- 
+  font-size:16px;
+  font-weight:600;
 }
 
 /* Style for the login dropdown */

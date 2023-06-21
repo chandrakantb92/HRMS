@@ -594,7 +594,9 @@ def attendanceSection(request):
         return HttpResponse(e)
 
 #Employee Pay slip view
-def employeePaySlip(request):  # sourcery skip: extract-method, low-code
+def employeePaySlip(request):  # sourcery skip: extract-method, low-code, move-assign, remove-unreachable-code
+    years=[2023,2022,2021,2020,2019]
+    months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
     if request.method=="POST":
         try:
             emp_id = int(request.POST.get('emp_id'))
@@ -603,21 +605,18 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code
             if emp_id is  None or month is  None or  year is  None:
                 return JsonResponse({'status':400, 'message':" Bad Request "})
             employee = Employee.objects.get(id=emp_id)
-            slip = getSlip(employee,month,year)
-            print("slip converted")
-            data = generateSlipData(slip)
-            print("data extracted ")
-            pdf = render_to_pdf(data['template'])
-            print("pdf converted")
-            email = data['email']
-            send_slip_email(email,pdf)
-            print("Successfully mail done")
-            return redirect('employeePaySlip')
+            if slip := getSlip(employee,month,year):
+                if data:= generateSlipData(slip.slip_num):
+                    pdf = render_to_pdf(str(data['template']))
+                    print("pdf converted")
+                    email = data['email']
+                    send_slip_email(email, data['template'])
+                    return redirect('employeePaySlip')
+                    print("Error while creating pdf")
+            return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"No Data Found"})
         except Exception as e:
             return HttpResponse(e)
     if isEmployeeLogedIn():
-        years=[2023,2022,2021,2020,2019]
-        months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
         return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':""})
     else:
         return HttpResponse("Bad Request!")

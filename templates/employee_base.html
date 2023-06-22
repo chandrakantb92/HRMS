@@ -63,7 +63,16 @@
                 border-radius: 4px;
                 cursor: pointer;
               }
-              
+              table  {
+                border: 1px solid #120907;
+                color:#FFFFFF;
+              }
+              b{
+                color:#122842;
+              }
+              a{
+                text-decoration:none;
+              }
               @media screen and (max-width: 480px) {
                 .form-container {
                   max-width: 100%;
@@ -79,7 +88,7 @@
         <div class="container">
             <div class="sidebar">
                 <ul>
-                    <li><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  />Home</a></li>
+                    <li ><a href="{% url 'employeeHome' %}"><img class="icon" src="{% static 'images/home.png' %}"  /><b>Home</b></a></li>
                     <li><a href="{% url 'employeeProfile' %}"><img class="icon" src="{% static 'images/profile.png' %}" />Profile</a></li>
                     <li><a href="{% url 'employeeHoliday' %}"><img class="icon" src="{% static 'images/holiday.png' %}" />Holiday</a></li>
                     <li><a href="{% url 'employeeLeave' %}"><img class="icon" src="{% static 'images/leave.png' %}" />Leave</a></li>
@@ -118,14 +127,14 @@
                             <tr>
                                 <th>Total Paid Leaves</th>
                                 <th>Total casual Taken </th>
-                                <th>Leave Paid Leave Used</th>
+                                <!-- <th>Leave Paid Leave Used</th> -->
                                 <th>Paid Leave Balance</th>
                                 <th>Comm OffLeave </th>
                             </tr>
                             <tr>
                                 <td> {{leave.total_paid_leaves}} </td>
                                 <td>{{leave.total_casual_leaves}} </td>
-                                <td>{{leave.used_paid_leaves}} </td>
+                                <!-- <td>{{leave.used_paid_leaves}} </td> -->
                                 <td>{{leave.paid_leave_balance}} </td>
                                 <td>{{leave.comp_off_leave}} </td>
                             </tr>
@@ -138,6 +147,7 @@
                                     <th>ID</th>
                                     <th>Type</th>
                                     <th>Date</th>
+                                    <th>Days</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -147,6 +157,7 @@
                                     <td>{{ leave.leave_id }}</td>
                                     <td>{{ leave.leave_type }}</td>
                                     <td>{{ leave.leave_from }}</td>
+                                    <td>{{ leave.number_of_days }}</td>
                                 {% if leave.is_aproved %}
                                     <td>Aproved</td>
                                 {% else %}

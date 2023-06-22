@@ -8,7 +8,7 @@ a {
 }
 
 a:hover {
-  color: red;
+  color: #146088;
 }
 
 li {
@@ -123,6 +123,7 @@ p {
     padding-left: 30px;
   }
 }
+
 
 /* CSS for responsiveness */
 @media screen and (max-width: 768px) {

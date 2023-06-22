@@ -477,15 +477,16 @@ def aproveLeave(request):
     return render(request, 'aprove_leave.html', {'employee_leaves': EmployeeLeave.objects.all().filter(is_aproved=False)})
 
 
+
 #Update Leave Data(Call by Admin for System Automation)
 def updateLeave(empId):
     try:
         employee=Employee.objects.get(id=empId)
         leave=Leave.objects.get(emp_id=employee)
-        eleaves=EmployeeLeave.objects.filter(emp_id=employee,type='paid', is_aproved=True)
+        eleaves=EmployeeLeave.objects.filter(emp_id=employee,leave_type='paid', is_aproved=True)
         cnt = sum(o.number_of_days for o in eleaves)
         leave.used_paid_leaves=cnt
-        eleaves=EmployeeLeave.objects.filter(emp_id=employee,type='casual', is_aproved=True)
+        eleaves=EmployeeLeave.objects.filter(emp_id=employee, leave_type='casual', is_aproved=True)
         cnt = sum(o.number_of_days for o in eleaves)
         leave.total_casual_leaves=cnt
         leave.paid_leave_balance=leave.total_paid_leaves-cnt

@@ -13,16 +13,23 @@
 table {
   width: 90%;
   border-collapse: collapse;
-  background-color:#20dad8;
   text-align:center;
 
 }
-
-table, th, td {
+table  {
   border: 1px solid #120907;
+  color:#FFFFFF;
+}
+
+table  {
+  border: 1px solid #120907;
+  color:#FFFFFF;
 }
 th{
   background-color:#209ed8;
+}
+td{
+  background-color: #20dad8;
 }
 
 .padding{
@@ -40,5 +47,7 @@ body{
   position:fixed;
   width:80%;
 }            
-
+a{
+  text-decoration:none;
+}
 

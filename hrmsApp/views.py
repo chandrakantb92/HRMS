@@ -609,12 +609,17 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code, move-a
                 return JsonResponse({'status':400, 'message':" Bad Request "})
             employee = Employee.objects.get(id=emp_id)
             if slip := getSlip(employee,month,year):
-                if data:= generateSlipData(slip.slip_num):
-                    email = data['email']
-                    if send_slip_email(email, data['template']):
-                        return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Slip sent to your email"})
-                    return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"Internal server error while sending email"})                
-                return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"Internal server while extracting data"})
+                if slip.status is False:
+                    if data:= generateSlipData(slip.slip_num):
+                        email = data['email']
+                        if send_slip_email(email, data['template']):
+                            slip.status=True
+                            slip.save()
+                            print("Success")
+                            return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Slip sent to your email"})
+                        return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"Internal server error while sending email"})                
+                    return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"Internal server while extracting data"})
+                return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"Limit exceed"})
             return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'error':"No Data Found"})
         except Exception as e:
             return HttpResponse(e)

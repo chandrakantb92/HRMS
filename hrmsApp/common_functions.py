@@ -20,9 +20,6 @@ Function to calculate number of work days, salary amount, deduction
 """
 def generateSlipData(slip_num):
     try:
-        # Extracting dictionary from model object
-        # slip_dict = model_to_dict(slip)
-        # Extracting objects to be replaced in the template
         slip=EmployeePSlip.objects.get(slip_num=slip_num)
         employee = Employee.objects.get(id=slip.emp_id.id)
         official = EmployeeOfficialDetails.objects.get(id=employee)
@@ -68,97 +65,37 @@ def generateSlipData(slip_num):
         print(e)
         return False
 
-# def send_slip_email(email, template):
-#     try:
-#         from_email = settings.DEFAULT_FROM_EMAIL
-#         to_email = [email]
-#         subject = "Monthly Salary Slip"
-#         text_content = "Please find attached your monthly salary slip."
-        
-#         # Create an email message with alternative content (HTML and PDF)
-#         msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
-#         msg.attach_alternative(template, "text/html")
-#         # msg.attach('attachment.pdf', pdf, 'application/pdf')
-#         msg.send()
-#         print("Mail sent successfully")
-#         return True
-#     except Exception as e:
-#         print(e)
-#         return False
-
-# def render_to_pdf(employee_template: str):
-#     try:
-    
-#         config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
-#         # Define the input HTML string and the output PDF data
-#         output_data = BytesIO()
-#         # password = ""
-
-#         # #Define the password that will be used to protect the PDF
-#         # temp_password = dob.split("-")
-#         # for var_char in temp_password:
-#         #     password = password + var_char
-
-#         # Use pdfkit to convert the HTML string to a PDF
-#         pdf_data = pdfkit.from_string(employee_template, False, options={'quiet': ''}, configuration=config)
-
-#         # Open the PDF data as a stream and add password protection
-#         pdf_reader = PyPDF2.PdfFileReader(BytesIO(pdf_data))
-#         pdf_writer = PyPDF2.PdfFileWriter()
-#         for page in range(pdf_reader.getNumPages()):
-#             pdf_writer.addPage(pdf_reader.getPage(page))
-
-#         pdf_writer.encrypt("212112")
-
-#         # Write the password-protected PDF to a BytesIO object
-#         pdf_writer.write(output_data)
-
-#         # Get the PDF data as a string
-#         print("return successfully")
-#         return output_data.getvalue()
-#     except Exception as error:
-#         print(error)
-#         return False
-
-
-def send_slip_email_temp(email, pdf):
+def send_slip_email(email, template):
     try:
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email = [email]
         subject = "Monthly Salary Slip"
         text_content = "Please find attached your monthly salary slip."
-        
-        # Create an email message with alternative content (HTML and PDF)
         msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
-        msg.attach('slip.pdf', pdf, 'application/pdf')
+        msg.attach_alternative(template, "text/html")
         msg.send()
+        print("Mail sent successfully")
         return True
     except Exception as e:
         print(e)
         return False
-       
+
 def render_to_pdf(employee_template: str):
     try:
-        # Configure pdfkit to use wkhtmltopdf binary
         config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
-
-        # Convert HTML to PDF using pdfkit
-        pdf_data = pdfkit.from_string(employee_template, False, configuration=config, options={'quiet': ''})
-
-        # Encrypt the PDF with a password
+        output_data = BytesIO()
+        pdf_data = pdfkit.from_string(employee_template, False, options={'quiet': ''}, configuration=config)
         pdf_reader = PyPDF2.PdfFileReader(BytesIO(pdf_data))
         pdf_writer = PyPDF2.PdfFileWriter()
         for page in range(pdf_reader.getNumPages()):
             pdf_writer.addPage(pdf_reader.getPage(page))
-        pdf_writer.encrypt('212112')
 
-        # Write the password-protected PDF to a BytesIO object
-        output_data = BytesIO()
+        pdf_writer.encrypt("212112")
         pdf_writer.write(output_data)
-
-        # Get the PDF data as bytes
+        print("return successfully")
         return output_data.getvalue()
-
     except Exception as error:
-        print(f"Error generating PDF: {error}")
+        print(error)
         return False
+
+

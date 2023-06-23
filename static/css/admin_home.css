@@ -4,11 +4,12 @@ body{
 }
 a {
   color: #fff;
+  text-decoration: none;
   
 }
 
 a:hover {
-  color: #146088;
+  color: #122842;
 }
 
 li {
@@ -28,7 +29,7 @@ li {
 .sidebar {
   width: 20%;
   height: auto;
-  background-color: #008494;
+  background-color: #209ed8;
   min-height: calc(100vh - 60px);
   font-weight: 700;
   top: 69px;
@@ -84,10 +85,6 @@ li {
 .menu ul li ul li a {
   padding: 10px;
   color: #333;
-}
-
-p {
-  background-color: aqua;
 }
 
 /* Responsive CSS */

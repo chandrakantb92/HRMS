@@ -61,7 +61,7 @@ urlpatterns = [
     path('updateEmployeePersonal/', updateEmployeePersonal, name='updateEmployeePersonal'),
     path('updateEmployeeEducational/', updateEmployeeEducational, name='updateEmployeeEducational'),
     path('updateEmployeeOfficial/', updateEmployeeOfficial, name='updateEmployeeOfficial'),
-     path('updateEmployeePackage/', updateEmployeePackage, name='updateEmployeePackage'),
+    path('updateEmployeePackage/', updateEmployeePackage, name='updateEmployeePackage'),
     
     
     re_path(r'^.*/$', page_not_available, name='page_not_available'),

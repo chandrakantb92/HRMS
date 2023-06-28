@@ -40,6 +40,7 @@ def _extracted_from_employee_registrarion_4(request):
     employee.contact=request.POST.get('contact')
     employee.alternative_contact=request.POST.get('alternative_contact')
     employee.blood_group=request.POST.get('blood_group')
+    employee.gender=request.POST.get('gender')
     employee.personal_email=request.POST.get('personal_email')
     employee.company_email=request.POST.get('company_email')
     employee.role=request.POST.get('role')

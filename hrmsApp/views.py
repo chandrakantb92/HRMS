@@ -111,7 +111,12 @@ def employeeLogin(request):  # sourcery skip: extract-method
 def employeeHome(request):  # sourcery skip: avoid-builtin-shadow
     if isEmployeeLogedIn():
         balanceLeave(userObj())
-        return render(request, 'employee_base.html',{'user':userObj(),'leave':Leave.objects.get(emp_id=userObj()),'empLeave':EmployeeLeave.objects.all().filter(emp_id=userObj()),'holidays': Holiday.objects.filter(date__gte=date.today()),'is_attendence':isAttendenceSaved,'in_attendance':isInAttendenceSaved,'out_attendance':isOutAttendenceSaved })
+        employeeleave = EmployeeLeave.objects.all().filter(emp_id=userObj())
+        leave = Leave.objects.get(emp_id=userObj())
+        leave.used_paid_leaves=(leave.total_paid_leaves) - (leave.used_paid_leaves)
+        leave.save()
+        leave = Leave.objects.get(emp_id=userObj())
+        return render(request, 'employee_base.html',{'user':userObj(),'leave':leave, 'empLeave':employeeleave,'holidays': Holiday.objects.filter(date__gte=date.today()),'is_attendence':isAttendenceSaved,'in_attendance':isInAttendenceSaved,'out_attendance':isOutAttendenceSaved })
     return redirect('employeeLogin')
 
 #Employee Profile page view (Employee) 
@@ -252,6 +257,7 @@ def employeeWorkDetailsRegistration(request):  # sourcery skip: extract-method
             date_of_joining=request.POST.get('date_of_joining'),
             date_of_leave=request.POST.get('date_of_leave'))
             work_details.save()
+            Leave.objects.create(emp_id=employee)
             createLeave(employee)
             leaveAllowence()
             return redirect('employeeOfficialDetails')
@@ -264,12 +270,24 @@ def employeeWorkDetailsRegistration(request):  # sourcery skip: extract-method
 #Create View Function(System Automation)
 def createLeave(employee):
     try:
-        if leave:=Leave.objects.get(emp_id=employee):
+        if leave:=isLeaveAlloted(employee) is False:
+            leave = Leave.objects.create(emp_id=employee)
+            leave.total_casual_leaves = 0
+            leave.total_paid_leaves = 1
+            leave.used_paid_leaves = 0
             leave.save()
-        leave=Leave.objects.create(emp_id=employee)
-        leave.save()
+            print("success")
     except Exception as e:
         print(e)
+        return HttpResponse("Error")
+    
+def isLeaveAlloted(employee):
+    try:
+        if leave := Leave.objects.get(emp_id=employee):
+            return leave
+    except Exception as e:
+        print(e)
+        return False
     
 #Employee official details view(Admin)
 def employeeOfficialDetails(request):
@@ -680,7 +698,7 @@ def sendMailOtp(otp,reicever_email):
     try:
         text = template.OTP_AUTHENTICATOIN_MAIL_TEMPLATE
         text=text.replace('mail_otp', str(otp))
-        subject = 'Test email'
+        subject = 'OTP Authentication'
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email=[reicever_email]
         to_email=['Chandrakant.b@sankeysolutions.com']

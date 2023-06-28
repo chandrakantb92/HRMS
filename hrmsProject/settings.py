@@ -2,17 +2,19 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
+PASSWORD = os.environ.get('PASSWORD')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_5wnb-x=uqo(_)ccaa1o=j0@&)m+$(oe2^q$_lssv7al=dgfho'
+# SECRET_KEY = 'django-insecure-_5wnb-x=uqo(_)ccaa1o=j0@&)m+$(oe2^q$_lssv7al=dgfho'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['3dc0-219-91-171-54.ngrok-free.app','127.0.0.1','*']
 
 
 # Application definition
@@ -66,7 +68,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hrms',
          'USER': 'root',
-         'PASSWORD': '3112',
+         'PASSWORD': PASSWORD,
          'HOST': 'localhost',
          'PORT': '3306'    
     } 

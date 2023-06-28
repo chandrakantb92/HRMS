@@ -10,6 +10,7 @@ class Employee(models.Model):
     contact = models.CharField(max_length=15)
     alternative_contact = models.CharField(max_length=15, blank=True)
     blood_group = models.CharField(max_length=5)
+    gender = models.CharField(max_length=10, default="")
     personal_email = models.CharField(max_length=50, blank=True)
     company_email = models.EmailField(max_length=50, blank=True)
     role = models.CharField(max_length=50)

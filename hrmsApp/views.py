@@ -793,7 +793,7 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
             employee.date_of_birth = request.POST.get('date_of_birth') if employee.date_of_birth!=request.POST.get('date_of_birth') else employee.date_of_birth
             employee.current_address = request.POST.get('current_address') if employee.current_address!=request.POST.get('current_address') else employee.current_address
             employee.permanent_address = request.POST.get('permanent_address') if employee.permanent_address!=request.POST.get('permanent_address') else employee.permanent_address
-            employee.password = hash_password(request.POST.get('password')) if employee.password!=hash_password(request.POST.get('password')) else employee.password
+            #employee.password = hash_password(request.POST.get('password')) if employee.password!=hash_password(request.POST.get('password')) else employee.password
             employee.save()
             if isEmployeeLogedIn():
                 return redirect('employeeProfile')
@@ -802,14 +802,15 @@ def updateEmployeePersonal(request):  # sourcery skip: extract-method
             return HttpResponse("Who the hell are you")
         except Exception as e:
           print(e)
-    emp_id=int(request.GET.get('emp_id'))
-    if isEmployeeLogedIn():
-        if emp_id != logedUserId():
-            return JsonResponse({'status':401, 'message':'unauthorized access'})
-        return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})   
-    if isAdminLogedIn():
-        return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})
-    return redirect('employeeLogin')   
+    if request.method=="GET":
+        emp_id=int(request.GET.get('emp_id'))
+        if isEmployeeLogedIn():
+            if emp_id != logedUserId():
+                return JsonResponse({'status':401, 'message':'unauthorized access'})
+            return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})   
+        if isAdminLogedIn():
+            return render(request, 'update_employee_personal.html',{'employee':Employee.objects.get(id= emp_id)})
+        return redirect('employeeLogin')   
 
 # Update employee Educational Details
 def updateEmployeeEducational(request):  # sourcery skip: extract-method, low-code-quality

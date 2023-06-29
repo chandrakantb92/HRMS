@@ -925,3 +925,4 @@ def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-q
     if isAdminLogedIn():
         return render(request, 'update_employee_package.html',{'package':EmployeePackageDetails.objects.get(id=(Employee.objects.get(id= emp_id))), 'isAdminLogedIn':True})
     return redirect('adminLogin') 
+# 

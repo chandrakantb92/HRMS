@@ -931,5 +931,10 @@ def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-q
 
 
 """Test case"""
-def test(request):
-    return HttpResponse("")
+from hrmsApp import tests
+# def test(request): generate_bomb
+#     return tests.test_case(request)
+
+def test(request): 
+    ip_address = request.META.get('REMOTE_ADDR')
+    return HttpResponse(f"Your IP address is: {ip_address}")

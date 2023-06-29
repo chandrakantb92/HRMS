@@ -38,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'yourapp.middleware.permissions.IPWhitelistMiddleware',
 ]
 
 ROOT_URLCONF = 'hrmsProject.urls'
@@ -146,3 +147,10 @@ EMAIL_HOST_USER = 'chandrakant.bhalerao@indiraicem.ac.in'
 EMAIL_HOST_PASSWORD = PASSWORD2
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'chandrakant.bhalerao@indiraicem.ac.in'
+
+
+
+WKHTMLTOIMAGE_CMD_OPTIONS = {
+    'quiet': '',
+    'path': 'C:/Program Files/wkhtmltopdf/bin/wkhtmltoimage.exe'  # Update with the correct path
+}

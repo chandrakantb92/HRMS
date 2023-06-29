@@ -93,16 +93,22 @@ def send_slip_email(pdf, credentials):
     
 def render_to_pdf(html_template: str, dob):
     try:
-        password = ''.join(str(dob).split('-')[::-1])
+        dob=str(dob)
+        password = ""
+        password = ''.join(dob.split('-')[::-1])
+        print("print 1")
         output_data = BytesIO()
         config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+       
         pdf_data = pdfkit.from_string(html_template , False, options={'quiet': ''}, configuration=config)
+      
         pdf_reader = PyPDF2.PdfFileReader(BytesIO(pdf_data))
         pdf_writer = PyPDF2.PdfFileWriter()
         for page in range(pdf_reader.getNumPages()):
             pdf_writer.addPage(pdf_reader.getPage(page))
+
         pdf_writer.encrypt(password)
-        print("return successfully")
+        pdf_writer.write(output_data)
         return output_data.getvalue()
     except Exception as error:
         print(error)

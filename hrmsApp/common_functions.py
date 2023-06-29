@@ -1,29 +1,28 @@
 # import datetime
-from django.shortcuts import redirect, render
+# from django.shortcuts import redirect, render
 from hrmsApp.models import*
 from hrmsApp import template
-from django.forms.models import model_to_dict
+#from django.forms.models import model_to_dict
 from hrmsProject import settings
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
+# from django.core.mail import EmailMultiAlternatives
+# from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from xhtml2pdf import pisa
 from io import BytesIO
 from reportlab.lib import pdfencrypt
 import pdfkit
 import PyPDF2
-import json
+# import json
 from django.views.decorators.csrf import csrf_exempt
-from  datetime import datetime
-from datetime import timedelta
+# from  datetime import datetime
+# from datetime import timedelta
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.db.models import Q
-from django.template import Context, Template
+# from django.template import Context, Template
 from io import BytesIO
-from xhtml2pdf import pisa
 import datetime,sys,os
-import pdfkit
+
 
 
 
@@ -81,7 +80,7 @@ def send_slip_email(pdf, credentials):
         from_email = settings.DEFAULT_FROM_EMAIL
         to_email = [credentials['email']]
         subject = "Monthly Salary Slip"
-        text_content = "Please find attached your monthly salary slip."
+        text_content = f"Please find attached your monthly salary slip of {credentials['month']} -  {credentials['year']}. Password is your Date of birth."
         msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
         msg.attach(f"{credentials['name']}_{credentials['month']}-{credentials['year']}_Salary_slip.pdf", pdf,'application/pdf')
         msg.send()

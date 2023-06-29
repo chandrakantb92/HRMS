@@ -631,7 +631,7 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code, move-a
                     if data:= generateSlipData(slip.slip_num):
                         email = data['email']
                         if send_slip_email(email, data['template']):
-                            slip.status=True
+                            # slip.status=True
                             slip.save()
                             print("Success")
                             return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Slip sent to your email"})

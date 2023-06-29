@@ -201,8 +201,8 @@ PAY_SLIP_TEMPLATE = """
         <div style="text-align:center">
             <!-- <img src="{% static 'images/slogo.png' %}" style="display: block; height: 60px; border: 0; margin:auto;"> <br> -->
             <div> <h2> <b>SANKEY  SOLUTIONS PVT. LTD</b> </h2> </div>
-            <div>602, Windsor Commerce Building,Baner Road, Baner, Pune Maharashtra 411045</div>
-            <div>Salary slip : month - year </div>
+            <div><h3> <b>602, Windsor Commerce Building,Baner Road, Baner, Pune Maharashtra 411045 </b> </h3></div>
+            <div><h3>Salary slip : month - year </h4></div>
         </div>
         <br>
         <div style="border: 1px solid black; margin: 2px;" class="table-border">

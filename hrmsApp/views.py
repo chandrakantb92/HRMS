@@ -874,12 +874,13 @@ def updateEmployeeOfficial(request): # sourcery skip: extract-method, last-if-gu
                 official.bank_acount_number = request.POST.get('bank_acount_number') if official.bank_acount_number!=request.POST.get('bank_acount_number') else official.official_name
                 official.aadhaar = request.POST.get('aadhaar') if official.aadhaar!=request.POST.get('aadhaar') else official.aadhaar
                 official.pan = request.POST.get('pan') if official.pan!=request.POST.get('pan') else official.pan
-                official.universal_acount_number = request.POST.get('universal_acount_number') if official.universal_acount_number!=request.POST.get('universal_acount_number') else official.universal_acount_number
-                official.esic_number = request.POST.get('esic_number') if official.esic_number!=request.POST.get('esic_number') else official.esic_number
                 official.save()
                 if isEmployeeLogedIn():
                     return redirect('employeeProfile')
                 if isAdminLogedIn():
+                    official.universal_acount_number = request.POST.get('universal_acount_number') if official.universal_acount_number!=request.POST.get('universal_acount_number') else official.universal_acount_number
+                    official.esic_number = request.POST.get('esic_number') if official.esic_number!=request.POST.get('esic_number') else official.esic_number
+                    official.save()
                     return redirect('viewAllEmployee')
                 return HttpResponse("Who are you")
             return JsonResponse({'status':400, 'message':'Invalid request body'})

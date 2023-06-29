@@ -615,7 +615,7 @@ def attendanceSection(request):
         return HttpResponse(e)
 
 #Employee Pay slip view
-def employeePaySlip(request):  # sourcery skip: extract-method, low-code, move-assign, remove-unreachable-code
+def employeePaySlip(request):  # sourcery skip: extract-method, low-code, low-code-quality, move-assign, remove-unreachable-code
     years=[2023,2022,2021,2020,2019]
     months=['January','February', 'March','April','May', 'June','July','August','September','October','November','December']
     if request.method=="POST":
@@ -628,9 +628,10 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code, move-a
             employee = Employee.objects.get(id=emp_id)
             if slip := getSlip(employee,month,year):
                 if slip.status is False:
-                    if data:= generateSlipData(slip.slip_num):
-                        email = data['email']
-                        if send_slip_email(email, data['template']):
+                    if html_template := generateSlipData(slip.slip_num):
+                        pdf = render_to_pdf(html_template, employee.date_of_birth)
+                        credentials = {'name' : employee.name, 'month':month, 'year':year, 'email':employee.company_email}
+                        if send_slip_email(pdf, credentials):
                             # slip.status=True
                             slip.save()
                             print("Success")

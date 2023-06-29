@@ -1,4 +1,4 @@
-import datetime
+# import datetime
 from django.shortcuts import redirect, render
 from hrmsApp.models import*
 from hrmsApp import template
@@ -12,6 +12,18 @@ from io import BytesIO
 from reportlab.lib import pdfencrypt
 import pdfkit
 import PyPDF2
+import json
+from django.views.decorators.csrf import csrf_exempt
+from  datetime import datetime
+from datetime import timedelta
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.db.models import Q
+from django.template import Context, Template
+from io import BytesIO
+from xhtml2pdf import pisa
+import datetime,sys,os
+import pdfkit
 
 
 
@@ -25,7 +37,6 @@ def generateSlipData(slip_num):
         official = EmployeeOfficialDetails.objects.get(id=employee)
         work = EmployeeWorkDetails.objects.get(id=employee)
         package = EmployeePackageDetails.objects.get(id=employee)
-        email = employee.company_email
         slip_template = template.PAY_SLIP_TEMPLATE
         slip_template=slip_template.replace("month",slip.month)
         slip_template=slip_template.replace("year",slip.year)
@@ -60,38 +71,37 @@ def generateSlipData(slip_num):
         slip_template=slip_template.replace("total_deduction", str(slip.total_deduction))
         slip_template=slip_template.replace("salary_in_hand", str(slip.net_pay))
         print("Template converted successfully")
-        return {'template': slip_template, 'email': email}
+        return slip_template
     except Exception as e:
         print(e)
         return False
 
-def send_slip_email(email, template):
+def send_slip_email(pdf, credentials):
     try:
         from_email = settings.DEFAULT_FROM_EMAIL
-        to_email = [email]
+        to_email = [credentials['email']]
         subject = "Monthly Salary Slip"
         text_content = "Please find attached your monthly salary slip."
         msg = EmailMultiAlternatives(subject, text_content, from_email, to_email)
-        msg.attach_alternative(template, "text/html")
+        msg.attach(f"{credentials['name']}_{credentials['month']}-{credentials['year']}_Salary_slip.pdf", pdf,'application/pdf')
         msg.send()
         print("Mail sent successfully")
         return True
     except Exception as e:
         print(e)
         return False
-
-def render_to_pdf(employee_template: str):
+    
+def render_to_pdf(html_template: str, dob):
     try:
-        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        password = ''.join(str(dob).split('-')[::-1])
         output_data = BytesIO()
-        pdf_data = pdfkit.from_string(employee_template, False, options={'quiet': ''}, configuration=config)
+        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        pdf_data = pdfkit.from_string(html_template , False, options={'quiet': ''}, configuration=config)
         pdf_reader = PyPDF2.PdfFileReader(BytesIO(pdf_data))
         pdf_writer = PyPDF2.PdfFileWriter()
         for page in range(pdf_reader.getNumPages()):
             pdf_writer.addPage(pdf_reader.getPage(page))
-
-        pdf_writer.encrypt("212112")
-        pdf_writer.write(output_data)
+        pdf_writer.encrypt(password)
         print("return successfully")
         return output_data.getvalue()
     except Exception as error:

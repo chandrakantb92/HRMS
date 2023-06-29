@@ -1,8 +1,9 @@
 from pathlib import Path
 import os
-# from dotenv import load_dotenv
-# load_dotenv()
-PASSWORD1 = os.environ.get('PASSWORD')
+from dotenv import load_dotenv
+load_dotenv()
+PASSWORD1 = os.environ.get('PASSWORD1')
+PASSWORD2 = os.environ.get('PASSWORD2')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_HOST = 'smtp.outlook.com'
 # EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'chandrakant.b@sankeysolutions.com'
-# EMAIL_HOST_PASSWORD = PASSWORD1 = os.environ.get('PASSWORD')
+# EMAIL_HOST_PASSWORD = PASSWORD1 
 # EMAIL_USE_TLS = True
 # DEFAULT_FROM_EMAIL = 'chandrakant.b@sankeysolutions.com'
 
@@ -142,6 +143,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.outlook.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'chandrakant.bhalerao@indiraicem.ac.in'
-EMAIL_HOST_PASSWORD = PASSWORD2 = os.environ.get('PASSWORD')
+EMAIL_HOST_PASSWORD = PASSWORD2
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'chandrakant.bhalerao@indiraicem.ac.in'

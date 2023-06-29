@@ -130,13 +130,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 """Email Server Setting"""
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.outlook.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'chandrakant.b@sankeysolutions.com'
-EMAIL_HOST_PASSWORD = 'Pass@7224'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'chandrakant.b@sankeysolutions.com'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.outlook.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'chandrakant.b@sankeysolutions.com'
+# EMAIL_HOST_PASSWORD = 'Pass@7224'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'chandrakant.b@sankeysolutions.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.outlook.com'

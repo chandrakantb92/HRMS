@@ -38,7 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'yourapp.middleware.permissions.IPWhitelistMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'hrmsProject.urls'

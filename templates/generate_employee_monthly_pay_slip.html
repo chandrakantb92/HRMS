@@ -1,1 +1,35 @@
-comming soon
+{% comment %} {% include 'base.html' %} {% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Employee Monthly Pay Slip Generator</title>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="title"> <h1></h1> </div>
+        {% block content %}
+            <div class="container">
+                <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                         <div class="card-header"><h3>Employee Monthly Pay Slip Generator</h3></div> 
+                            <div class="card-body">
+                        <form method="GET" action="{% url 'employeeManualPaySlipGenerator' %}">
+                            {% csrf_token %}
+                            <div class="form-group row">
+                                <label for="id" class="col-md-4 col-form-label text-md-right"> Select Employee</label>
+                                <div class="col-md-6">
+                                    <select id="id" class="form-control" name="id" >
+                                        {% for employee in employees %}
+                                            <option value="{{ employee.id }}" class="form-control">{{ employee.id }} {{ employee.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+                        </form>
+        {% endblock %}
+    </body>
+</html>

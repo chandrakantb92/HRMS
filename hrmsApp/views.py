@@ -929,8 +929,21 @@ def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-q
     return redirect('adminLogin') 
 
 
-
-"""Employee Monthly Pay Slip Data Generator"""
+"""Employee Monthly Pay Slip Data Manual Generator"""
+def employeeManualPaySlipGenerator(request):
+    try:
+        if isAdminLogedIn():
+            employees = Employee.objects.all().order_by('id')
+            
+            return render(request, 'generate_employee_monthly_pay_slip.html', {'employees':employees})
+        return JsonResponse({'status_code':'401', 'message':'Unauthorized access'}, safe=False, status=401)
+    except Exception as e:
+        print(e)
+        return HttpResponse("Error")
+    
+    
+    
+"""Employee Monthly Pay Slip Data Bulk Generator"""
 def employeePaySlipBulkGenerator(request):
     try:
         return HttpResponse("Coming soon")
@@ -938,14 +951,7 @@ def employeePaySlipBulkGenerator(request):
         print(e)
         return HttpResponse("Error")
     
-    """Employee Monthly Pay Slip Data Generator"""
-def employeeManualPaySlipGenerator(request):
-    try:
-        return HttpResponse("Coming soon")
-    except Exception as e:
-        print(e)
-        return HttpResponse("Error")
-    
+
     
 """Test case"""
 from hrmsApp import tests

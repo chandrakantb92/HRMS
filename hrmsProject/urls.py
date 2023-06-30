@@ -62,6 +62,9 @@ urlpatterns = [
     path('updateEmployeeEducational/', updateEmployeeEducational, name='updateEmployeeEducational'),
     path('updateEmployeeOfficial/', updateEmployeeOfficial, name='updateEmployeeOfficial'),
     path('updateEmployeePackage/', updateEmployeePackage, name='updateEmployeePackage'),
+    path('employeePaySlipBulkGenerator/', employeePaySlipBulkGenerator, name='employeePaySlipBulkGenerator'),
+    path('employeeManualPaySlipGenerator/', employeeManualPaySlipGenerator, name='employeeManualPaySlipGenerator'),
+      
     path('test/', test, name='test'),
     
     re_path(r'^.*/$', page_not_available, name='page_not_available'),

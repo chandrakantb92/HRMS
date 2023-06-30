@@ -930,6 +930,23 @@ def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-q
 
 
 
+"""Employee Monthly Pay Slip Data Generator"""
+def employeePaySlipBulkGenerator(request):
+    try:
+        return HttpResponse("Coming soon")
+    except Exception as e:
+        print(e)
+        return HttpResponse("Error")
+    
+    """Employee Monthly Pay Slip Data Generator"""
+def employeeManualPaySlipGenerator(request):
+    try:
+        return HttpResponse("Coming soon")
+    except Exception as e:
+        print(e)
+        return HttpResponse("Error")
+    
+    
 """Test case"""
 from hrmsApp import tests
 # def test(request): generate_bomb

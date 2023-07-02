@@ -62,6 +62,7 @@ urlpatterns = [
     path('updateEmployeeEducational/', updateEmployeeEducational, name='updateEmployeeEducational'),
     path('updateEmployeeOfficial/', updateEmployeeOfficial, name='updateEmployeeOfficial'),
     path('updateEmployeePackage/', updateEmployeePackage, name='updateEmployeePackage'),
+     path('getEmployeeSlipData/', getEmployeeSlipData, name='getEmployeeSlipData'),
     path('employeePaySlipBulkGenerator/', employeePaySlipBulkGenerator, name='employeePaySlipBulkGenerator'),
     path('employeeManualPaySlipGenerator/', employeeManualPaySlipGenerator, name='employeeManualPaySlipGenerator'),
       

@@ -33,7 +33,7 @@ def admin_registrarion(request):
 # TODO Rename this here and in `employee_registrarion`
 def _extracted_from_employee_registrarion_4(request):
     employee=Employee()
-    employee.id=Employee.objects.count()+1
+    employee.id = generate_employee_id()
     employee.name=request.POST.get('name')
     employee.username=request.POST.get('username')
     employee.designation=request.POST.get('designation')
@@ -83,3 +83,9 @@ def isAdminExist(request):
         return False
     
 ###########################################################################################
+def  generate_employee_id():  # sourcery skip: avoid-builtin-shadow
+    try:
+        return (Employee.objects.all().order_by('-id').first().id) +1
+    except Exception as e:
+        print(e)
+        return 1001

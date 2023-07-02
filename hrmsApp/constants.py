@@ -1,17 +1,17 @@
 """Calender dictionary"""
 MONTH_DICT=[
-    {'1':'January'},
-    {'2':'February'},
-    {'3':'March'},
-    {'4':'April'},
-    {'5':'May'},
-    {'6':'June'},
-    {'7':'July'},
-    {'8':'August'},
-    {'9':'September'},
-    {'10':'October'},
-    {'11':'November'},
-    {'12':'December'},
+    {'January':1},
+    {'February':2},
+    {'March':3},
+    {'April':4},
+    {'May':5},
+    {'June':6},
+    {'July':7},
+    {'August':8},
+    {'September':9},
+    {'October':10},
+    {'November':11},
+    {'December':12},
 ]
 
 YEAR_DIC=[
@@ -59,3 +59,19 @@ MSG_502_BAD_GATEWAY = 'Bad Gateway'
 MSG_503_SERVICE_UNAVAILABLE = 'Service Unavailable'
 MSG_504_GATEWAY_TIMEOUT = 'Gateway Time Out'
 
+months = ['January','Februrary','March','April','May','June','July','August','September','October','November','December']
+
+years = [2023,2022,2021,2020,2019,2018,2017,2016,2015,2014]
+
+MONTH_DICTIONARY={
+    'January':1,
+    'February':2,
+    'March':3,
+    'April':4,
+    'May':5,
+    'June':6,
+    'July':7,
+    'August':8,
+    'September':9,
+    'October':10,
+    'November':11}

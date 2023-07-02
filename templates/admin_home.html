@@ -36,7 +36,7 @@
                               <ul>
                               </li  >
 
-                              <li>
+                             <!-- <li>
                                 <a style="color:#FFFFFF;margin-left:0px;" href="#">Employee Pay Slip</a>
                               <ul>
                                   <li><a href="{% url 'employeePaySlipBulkGenerator' %}">Bulk Generation</a></li>
@@ -44,9 +44,13 @@
                                 </ul>
                               </li>
                             </ul>
-                          <ul>
+                          <ul> -->
                           </li  >
-                              <a style="padding-left: 10px;" href="{% url 'holidayRegistration' %}">Register Holiday</a></li>
+                          <ul>
+                          <a style="padding-left: 10px;" href="{% url 'getEmployeeSlipData' %}">Manual Pay Slip Generator</a></li>
+                          </ul>   
+                          <br/>
+                          <a style="padding-left: 10px;" href="{% url 'holidayRegistration' %}">Register Holiday</a></li>
                               </ul><br>
                               <ul>
                                 </li><a style="padding-left: 10px;" href="{% url 'adminLogout' %}">Log Out</a></li>

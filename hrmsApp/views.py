@@ -27,7 +27,7 @@ def logedUserId():
 
 #Return id of loged in user(System Automation)
 def logedAdminId():
-    return (AdminLogin.objects.order_by('admin_id').first().admin_id.emp_id.id)
+    return int((AdminLogin.objects.order_by('admin_id').first().admin_id.emp_id.id))
    
 #return loged user object(System Automation)
 def userObj():
@@ -632,7 +632,7 @@ def employeePaySlip(request):  # sourcery skip: extract-method, low-code, low-co
                         pdf = render_to_pdf(html_template, employee.date_of_birth)
                         credentials = {'name' : employee.name, 'month':month, 'year':year, 'email':employee.company_email}
                         if send_slip_email(pdf, credentials):
-                            # slip.status=True
+                            slip.status=True
                             slip.save()
                             print("Success")
                             return render(request, 'employee_pay_slip.html', {'user':userObj() ,'years':years, 'months':months,'success':"Slip sent to your email"})
@@ -929,17 +929,113 @@ def updateEmployeePackage(request):  # sourcery skip: extract-method, low-code-q
     return redirect('adminLogin') 
 
 
-"""Employee Monthly Pay Slip Data Manual Generator"""
-def employeeManualPaySlipGenerator(request):
+"""getting Employee month slip data"""
+def getEmployeeSlipData(request):  # sourcery skip: remove-unnecessary-cast
+    if isAdminLogedIn():
+        employees = Employee.objects.all().order_by('id')
+        months = constants.months
+        years = constants.years
+        if request.method=="POST":
+            try:
+                emp_id = request.POST.get('id')
+                if employee := Employee.objects.get(id = emp_id):
+                    month = str(request.POST.get('month'))
+                    year = int(request.POST.get('year'))
+                    print (f" emp_id : {emp_id}, employee : {employee.name}, month : {month}, year : {year}")
+                    if employee_data := get_employee_month_data(employee.id, str(month), int(year)):
+                        if get_slip(emp_id,month,year) is False: 
+                            return render(request, 'generate_employee_monthly_pay_slip.html', {'employee_data' : employee_data})
+                        return render(request, 'select_employee_month_year.html', {'employees':employees, 'months':months, 'years':years, 'error':"Slip is already created"})
+                    return render(request, 'select_employee_month_year.html', {'employees':employees, 'months':months, 'years':years, 'error':"No data found"}) 
+                return render(request, 'select_employee_month_year.html', {'employees':employees, 'months':months, 'years':years, 'error':"Employee Data not found"})        
+            except Exception as e:
+                print(e)
+                return HttpResponse("Error in POST")
+        return render(request, 'select_employee_month_year.html', {'employees':employees, 'months':months, 'years':years, 'getting_info':True})
+    print("Unauthorized access")
+    return redirect('adminLogin')
+    
+"""Generate new slip number after"""
+def generate_slip_number():
     try:
-        if isAdminLogedIn():
-            employees = Employee.objects.all().order_by('id')
-            
-            return render(request, 'generate_employee_monthly_pay_slip.html', {'employees':employees})
-        return JsonResponse({'status_code':'401', 'message':'Unauthorized access'}, safe=False, status=401)
+       slip_number = EmployeePSlip.objects.order_by('-slip_num').first().id
+       return int(slip_number+1)
     except Exception as e:
         print(e)
-        return HttpResponse("Error")
+        return 1
+
+"""Getting slip if available"""  
+def get_slip(emp_id,month,year):
+    try:
+        if slip := EmployeePSlip.objects.filter(emp_id=emp_id,month=month,year=year).first():
+           return slip
+        return False
+    except Exception as e:
+        print(e)
+        return False
+    
+    
+    
+    
+    
+    
+    
+"""Employee Monthly Pay Slip Data Manual Generator"""
+def employeeManualPaySlipGenerator(request):  # sourcery skip: low-code-quality
+    if isAdminLogedIn():
+        try:
+            if request.method=="POST":
+                emp_id = request.POST.get('emp_id')
+                month= request.POST.get('month')
+                year= request.POST.get('year')
+                if get_slip(emp_id,month,year) is False:
+                    employee=Employee.objects.get(id=emp_id)
+                    slip = EmployeePSlip.objects.create(emp_id = employee)
+                    slip.slip_num = generate_slip_number()
+                    slip.month = month
+                    slip.year = year
+                    slip.paid_days= request.POST.get('paid_days')
+                    slip.total_present_days= request.POST.get('total_present_days')
+                    slip.total_working_days= request.POST.get('total_working_days')
+                    slip.basic = request.POST.get('basic')
+                    slip.hra = request.POST.get('hra')
+                    slip.travel_allowence = request.POST.get('travel_allowence')
+                    slip.medical_allowence = request.POST.get('medical_allowence')
+                    slip.other_allowence = request.POST.get('other_allowence')
+                    slip.arrears = request.POST.get('arrears')
+                    slip.leave_encashment = request.POST.get('leave_encashment')
+                    slip.bonus = request.POST.get('bonus')
+                    slip.provident_fund = request.POST.get('provident_fund')
+                    slip.esic = request.POST.get('esic')
+                    slip.professional_tax = request.POST.get('professional_tax')
+                    slip.other_charges = request.POST.get('other_charges')
+                    slip.tds = request.POST.get('tds')
+                    slip.advances = request.POST.get('advances')
+                    slip.total_deduction = request.POST.get('total_deduction')
+                    slip.total_earning = request.POST.get('total_earning')
+                    slip.net_pay = request.POST.get('net_pay')
+                    slip.issued_date = request.POST.get('issued_date')
+                    slip.status = False
+                    slip.created_by = Employee.objects.get(id=logedAdminId()).name
+                    slip.save()
+                    if request.POST.get('send_email')=="True":
+                        slip = getSlip(employee,month,year)
+                        html_template = generateSlipData(slip.slip_num)
+                        pdf = render_to_pdf(html_template, employee.date_of_birth)
+                        credentials = {'name' : employee.name, 'month':month, 'year':year, 'email':employee.company_email}
+                        if send_slip_email(pdf, credentials):
+                            slip.status=True
+                            slip.save()
+                            return render(request, 'select_employee_month_year.html', {'employees':Employee.objects.all(), 'months': constants.months, 'years': constants.years, 'success':"Slip Generated And Email Send To Employee"})
+                        return JsonResponse({'status_code': 500, 'message' : 'Internal server error while sending email check your internet' }, safe=False, status = 500)
+                    return render(request, 'select_employee_month_year.html', {'employees':Employee.objects.all(), 'months': constants.months, 'years': constants.years, 'success':"Slip Generated Successfully"})
+                return JsonResponse({'status_code': 408, 'message' : 'Request time out' }, safe=False, status = 408)
+            return JsonResponse({'status_code': 400, 'message' : 'Bad request body' }, safe=False, status = 400)
+        except Exception as e:
+            print(e)
+            return HttpResponse(e)
+    print("Unauthorized access!")
+    return redirect('adminLLogin')
     
     
     

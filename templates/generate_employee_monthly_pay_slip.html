@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Employee Monthly Pay Slip Generator</title>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <title>Calculate Monthly Pay Slip Generator</title>
+            <link rel="stylesheet" href="{% static '/css/bootstrap.css' %}">
     </head>
     <body>
         <div class="title"> <h1></h1> </div>
@@ -13,23 +13,205 @@
                 <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
-                         <div class="card-header"><h3>Employee Monthly Pay Slip Generator</h3></div> 
-                            <div class="card-body">
-                        <form method="GET" action="{% url 'employeeManualPaySlipGenerator' %}">
+                        <h3> <div class="card-header">Calculate Monthly Pay Slip Generator</div> </h3>
+                        <div class="card-body">
+                        <form method="POST" action="{% url 'employeeManualPaySlipGenerator' %}">
                             {% csrf_token %}
+
                             <div class="form-group row">
-                                <label for="id" class="col-md-4 col-form-label text-md-right"> Select Employee</label>
+                                <label for="emp_name" class="col-md-4 col-form-label text-md-right"><b>Employee Name</b></label>
                                 <div class="col-md-6">
-                                    <select id="id" class="form-control" name="id" >
-                                        {% for employee in employees %}
-                                            <option value="{{ employee.id }}" class="form-control">{{ employee.id }} {{ employee.name }}</option>
-                                        {% endfor %}
-                                    </select>
+                                  <input id="emp_name" type="text" class="form-control" name="emp_name"  autocomplete="off" readonly value="{{employee_data.employee.name}}">
+                                </div>
+                              </div>
+
+                            <div class="form-group row">
+                                <label for="emp_id" class="col-md-4 col-form-label text-md-right"><b>Employee ID</b></label>
+                                <div class="col-md-6">
+                                  <input id="emp_id" type="text" class="form-control" name="emp_id"  autocomplete="off" readonly value="{{employee_data.emp_id}}">
                                 </div>
                             </div>
 
+                            <div class="form-group row">
+                                <label for="month" class="col-md-4 col-form-label text-md-right"><b>Month</b></label>
+                                <div class="col-md-6">
+                                  <input id="month" type="text" class="form-control" name="month"  autocomplete="off" readonly value="{{employee_data.month}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="year" class="col-md-4 col-form-label text-md-right"><b>Year</b></label>
+                                <div class="col-md-6">
+                                  <input id="year" type="text" class="form-control" name="year"  autocomplete="off" readonly value="{{employee_data.year}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="paid_days" class="col-md-4 col-form-label text-md-right"><b>Paid Days</b></label>
+                                <div class="col-md-6">
+                                  <input id="paid_days" type="number" class="form-control" name="paid_days"  autocomplete="off" readonly value="{{employee_data.paid_days}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="total_present_days" class="col-md-4 col-form-label text-md-right"><b> Total Present Days</b></label>
+                                <div class="col-md-6">
+                                  <input id="total_present_days" type="number" class="form-control" name="total_present_days"  autocomplete="off" required value="{{employee_data.total_present_days}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="total_working_days" class="col-md-4 col-form-label text-md-right"><b>Total Working Days </b></label>
+                                <div class="col-md-6">
+                                  <input id="total_working_days" type="number" class="form-control" name="total_working_days"  autocomplete="off" required value="{{employee_data.total_working_days}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="basic" class="col-md-4 col-form-label text-md-right"><b>Basic Salary</b></label>
+                                <div class="col-md-6">
+                                  <input id="basic" type="number" class="form-control" name="basic"  autocomplete="off" required value="{{employee_data.basic}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="hra" class="col-md-4 col-form-label text-md-right"><b>House Rent Allowance</b></label>
+                                <div class="col-md-6">
+                                  <input id="hra" type="number" class="form-control" name="hra"  autocomplete="off" required value="{{employee_data.hra}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="travel_allowence" class="col-md-4 col-form-label text-md-right"><b>Travel Allowance</b></label>
+                                <div class="col-md-6">
+                                  <input id="travel_allowence" type="number" class="form-control" name="travel_allowence"  autocomplete="off" required value="{{employee_data.travell_allowance}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="medical_allowence" class="col-md-4 col-form-label text-md-right"><b>Medical Allowance</b></label>
+                                <div class="col-md-6">
+                                  <input id="medical_allowence" type="number" class="form-control" name="medical_allowence"  autocomplete="off" required value="{{employee_data.medical_allowance}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="other_allowence" class="col-md-4 col-form-label text-md-right"><b>Other Allowance</b></label>
+                                <div class="col-md-6">
+                                  <input id="other_allowence" type="number" class="form-control" name="other_allowence"  autocomplete="off" required value="{{employee_data.other_allowance}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="arrears" class="col-md-4 col-form-label text-md-right"><b> Arrears </b></label>
+                                <div class="col-md-6">
+                                  <input id="arrears" type="number" class="form-control" name="arrears"  autocomplete="off" required value="{{employee_data.arrears}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="leave_encashment" class="col-md-4 col-form-label text-md-right"><b> Leave Encashment </b></label>
+                                <div class="col-md-6">
+                                  <input id="leave_encashment" type="number" class="form-control" name="leave_encashment"  autocomplete="off" required value="{{employee_data.leave_encashment}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="bonus" class="col-md-4 col-form-label text-md-right"><b> Bonus  </b></label>
+                                <div class="col-md-6">
+                                  <input id="bonus" type="number" class="form-control" name="bonus"  autocomplete="off" required value="{{employee_data.bonus}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="provident_fund" class="col-md-4 col-form-label text-md-right"><b> Provident Fund  </b></label>
+                                <div class="col-md-6">
+                                  <input id="provident_fund" type="number" class="form-control" name="provident_fund"  autocomplete="off" required value="{{employee_data.provident_fund}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="esic" class="col-md-4 col-form-label text-md-right"><b> ESIC   </b></label>
+                                <div class="col-md-6">
+                                  <input id="esic" type="number" class="form-control" name="esic"  autocomplete="off" required value="{{employee_data.esic}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="professional_tax" class="col-md-4 col-form-label text-md-right"><b> Professional Tax   </b></label>
+                                <div class="col-md-6">
+                                  <input id="professional_tax" type="number" class="form-control" name="professional_tax"  autocomplete="off" required value="{{employee_data.professional_tax}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="other_charges" class="col-md-4 col-form-label text-md-right"><b> Other Charges    </b></label>
+                                <div class="col-md-6">
+                                  <input id="other_charges" type="number" class="form-control" name="other_charges"  autocomplete="off" required value="{{employee_data.other_charges}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="tds" class="col-md-4 col-form-label text-md-right"><b> TDS </b></label>
+                                <div class="col-md-6">
+                                  <input id="tds" type="number" class="form-control" name="tds"  autocomplete="off" required value="{{employee_data.tds}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="advances" class="col-md-4 col-form-label text-md-right"><b> Advances </b></label>
+                                <div class="col-md-6">
+                                  <input id="advances" type="number" class="form-control" name="advances"  autocomplete="off" required value="{{employee_data.advances}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="total_deduction" class="col-md-4 col-form-label text-md-right"><b> Total Deduction </b></label>
+                                <div class="col-md-6">
+                                  <input id="total_deduction" type="number" class="form-control" name="total_deduction"  autocomplete="off" required value="{{employee_data.total_deduction}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="total_earning" class="col-md-4 col-form-label text-md-right"><b> Total Earning </b></label>
+                                <div class="col-md-6">
+                                  <input id="total_earning" type="number" class="form-control" name="total_earning"  autocomplete="off" required value="{{employee_data.total_earning}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="net_pay" class="col-md-4 col-form-label text-md-right"><b> Net Pay </b></label>
+                                <div class="col-md-6">
+                                  <input id="net_pay" type="number" class="form-control" name="net_pay"  autocomplete="off" required value="{{employee_data.net_pay}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="issued_date" class="col-md-4 col-form-label text-md-right"><b> Issued Date </b></label>
+                                <div class="col-md-6">
+                                  <input id="issued_date" type="text" class="form-control" name="issued_date"  autocomplete="off" readonly value="{{employee_data.issued_date}}">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="send_email" class="col-md-4 col-form-label text-md-right"><b> Send Email </b></label>
+                                <div class="col-md-6">
+                                  <input id="send_email" type="checkbox" class="form-control" name="send_email"  autocomplete="off" readonly value="True">
+                                </div>
+                            </div>
+
+                           
+                         
+                        </div>
+                        
+                            <div class="form-group button">
+                                <button style="margin-left:40%;" type="reset" class="btn btn-secondary">Reset</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                             
                         </form>
+
+
         {% endblock %}
     </body>
 </html>

@@ -65,7 +65,7 @@ urlpatterns = [
      path('getEmployeeSlipData/', getEmployeeSlipData, name='getEmployeeSlipData'),
     path('employeePaySlipBulkGenerator/', employeePaySlipBulkGenerator, name='employeePaySlipBulkGenerator'),
     path('employeeManualPaySlipGenerator/', employeeManualPaySlipGenerator, name='employeeManualPaySlipGenerator'),
-      
+    path('api/employees/', EmployeeListAPIView.as_view(), name='employee-list'),
     path('test/', test, name='test'),
     
     re_path(r'^.*/$', page_not_available, name='page_not_available'),

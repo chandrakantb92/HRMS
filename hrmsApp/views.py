@@ -1055,5 +1055,5 @@ from hrmsApp import tests
 #     return tests.test_case(request)
 
 def test(request): 
-    ip_address = request.META.get('REMOTE_ADDR')
-    return HttpResponse(f"Your IP address is: {ip_address}")
+    employee = Employee.objects.all()
+    return JsonResponse({'status_code' : 200, 'message' : 'Success', 'data':{'data' : employee}})
